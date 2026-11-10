@@ -375,14 +375,31 @@ main {
 
 /* Hero: the valley, full screen, the title at the bottom left. */
 
+/* Text on a photo also gets a dark background of its own: it shows while the
+   photo loads, and contrast checkers, which can't see the photo, measure the
+   text against it. */
 .hero {
   position: relative;
   display: flex;
   align-items: flex-end;
   min-height: min(100svh, 56rem);
   min-height: max(34rem, min(100svh, 56rem));
+  background-color: var(--night);
   color: #ffffff;
   isolation: isolate;
+}
+
+/* The crop of a photo (focus in src/lib/photos.ts). */
+img[data-focus="50% 60%"] {
+  object-position: 50% 60%;
+}
+
+img[data-focus="60% 50%"] {
+  object-position: 60% 50%;
+}
+
+img[data-focus="60% 60%"] {
+  object-position: 60% 60%;
 }
 
 .hero-photo {
@@ -478,6 +495,7 @@ main {
   min-height: 22rem;
   overflow: hidden;
   border-radius: var(--radius);
+  background-color: var(--night);
   color: #ffffff;
   text-decoration: none;
   isolation: isolate;

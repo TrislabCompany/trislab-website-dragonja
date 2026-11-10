@@ -36,7 +36,12 @@ export interface Photo {
   src: ImageMetadata;
   alt: Record<Lang, string>;
   credit: Credit;
-  /** CSS object-position for crops: where the subject of the photo is. */
+  /**
+   * Where the subject of the photo is, for crops: a CSS object-position. It is
+   * written as data-focus and set by a rule in src/styles/global.css (the
+   * Content-Security-Policy blocks style attributes), so a new value needs a
+   * new rule there.
+   */
   focus?: string;
 }
 

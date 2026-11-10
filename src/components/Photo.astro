@@ -40,5 +40,5 @@ const height = Math.round((width * src.height) / src.width);
   decoding={eager ? "sync" : "async"}
   class={className}
   data-photo={id}
-  style={focus ? `object-position: ${focus}` : undefined}
+  data-focus={focus}
 />

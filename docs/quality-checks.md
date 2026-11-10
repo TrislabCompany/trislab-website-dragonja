@@ -32,6 +32,7 @@ Locally, `pnpm test` still runs everything. To check only some pages: `QUALITY_P
 - **Pages:** every URL in `dist/sitemap-*.xml`, so every page in every language.
 - **Rules:** WCAG 2 AA, with two engines, axe-core and HTML_CodeSniffer. Only errors fail the check; warnings and notices don't.
 - **Settings:** `.pa11yci.json`. `concurrency` stays at 1 because pa11y-ci 5 fails pages at random when it checks several at once.
+- **Text on photos:** axe can't measure the contrast of text on a photo or a gradient and marks it "needs review". `levelCapWhenNeedsReview: "warning"` reports those as warnings; a contrast that axe or HTML_CodeSniffer can measure still fails. So every element with text on a photo also gets a dark `background-color` (`.hero`, `.way` in `src/styles/global.css`), which the checkers measure the text against, and which shows while the photo loads.
 
 pa11y-ci is a machine check. It finds missing alt text, low contrast, missing labels, a wrong heading order or a missing `lang`. It doesn't replace a person with a keyboard and a screen reader. The accessibility statement (`src/content/legal/*/accessibility.md`) still needs that manual review once a year.
 

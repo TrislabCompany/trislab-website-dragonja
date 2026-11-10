@@ -24,12 +24,12 @@ const groups = kinds.map((kind) => ({ kind, items: items.filter((entry) => entry
     </nav>
   </div>
   {
-    groups.map((group) => (
+    groups.map((group, g) => (
       <section class="group" id={group.kind} aria-labelledby={`${group.kind}-title`}>
         <h2 id={`${group.kind}-title`}>{t(lang, `kind.${group.kind}`)}</h2>
         <ul class="cards">
-          {group.items.map((entry) => (
-            <ItemCard entry={entry} collection={collection} lang={lang} />
+          {group.items.map((entry, i) => (
+            <ItemCard entry={entry} collection={collection} lang={lang} eager={g === 0 && i === 0} />
           ))}
         </ul>
       </section>
