@@ -1,1 +1,4 @@
-* @TrislabCompany/devops
+* @TrislabCompany/trislab-dragonja
+/.github/ @TrislabCompany/trislab-dragonja @TrislabCompany/devops
+/platform.yaml @TrislabCompany/trislab-dragonja @TrislabCompany/devops
+/.trivyignore @TrislabCompany/trislab-dragonja @TrislabCompany/devops
