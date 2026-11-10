@@ -1,46 +1,162 @@
 ---
-import ContactCta from "../../components/ContactCta.astro";
 import ItemCard from "../../components/ItemCard.astro";
+import Photo from "../../components/Photo.astro";
+import PhotoCredits from "../../components/PhotoCredits.astro";
 import { languagePaths, localizedPath, t, type Lang } from "../../i18n";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { sortedItems, type ItemCollection } from "../../lib/items";
+import { sortedItems } from "../../lib/items";
 import site from "../../site.config";
+import { home, sources } from "../../texts/home";
 
 export const getStaticPaths = languagePaths;
 
 const { lang } = Astro.props as { lang: Lang };
-// A section for every list of items marked home in src/site.config.ts.
-const sections = await Promise.all(
-  site.collections
-    .filter((collection) => collection.home)
-    .map(async (collection) => ({ ...collection, items: await sortedItems(collection.id as ItemCollection, lang) })),
-);
+const text = home[lang];
+const featured = (await sortedItems("attractions", lang)).filter((entry) => entry.data.featured).slice(0, 6);
+const attractions = localizedPath(lang, "/attractions");
+const visit = localizedPath(lang, "/contact");
+const ways = [
+  { kind: "nature", photo: "valley-view", text: text.ways.nature },
+  { kind: "culture", photo: "stone-house", text: text.ways.culture },
+  { kind: "activity", photo: "parenzana", text: text.ways.activity },
+] as const;
+const getting = [
+  { ...text.getting.car, icon: "M5 17h14M6 17l1.5-5h9L18 17M7.5 12 9 8h6l1.5 4M7 20v-3M17 20v-3" },
+  { ...text.getting.bike, icon: "M6 17a3 3 0 1 0 0-.01M18 17a3 3 0 1 0 0-.01M6 17l4-7h5l3 7M10 10 8.5 7H7M15 10l-2 7" },
+  { ...text.getting.foot, icon: "M13 4a1.5 1.5 0 1 0 0 .01M10 21l2-6 3 3v3M12 15l-1-5 4 1 2 3M11 10l-3 3" },
+];
+// The photos on this page, for the credits at its end.
+const shown = ["valley-cascade", ...ways.map((way) => way.photo), "border-view", ...featured.map((entry) => entry.data.photo), "river-summer"];
 ---
 
-<BaseLayout title={site.name} lang={lang}>
-  <section class="hero">
-    <h1>{site.name}</h1>
-    <p class="lead">{site.description[lang]}</p>
-    <div class="actions">
-      <a class="button" href={localizedPath(lang, "/contact")}>{t(lang, "cta.contact")}</a>
+<BaseLayout title={site.name} lang={lang} wide>
+  <section class="hero" aria-labelledby="hero-title">
+    <Photo id="valley-cascade" lang={lang} widths={[640, 1024, 1600]} sizes="100vw" eager class="hero-photo" />
+    <div class="hero-shade"></div>
+    <div class="wrap hero-content">
+      <p class="eyebrow">{text.hero.eyebrow}</p>
+      <h1 id="hero-title">{text.hero.title}</h1>
+      <p class="hero-lead">{text.hero.lead}</p>
+      <div class="actions">
+        <a class="button" href="#ways">{text.hero.discover}</a>
+        <a class="button ghost" href={visit}>{text.hero.visit}</a>
+      </div>
     </div>
   </section>
 
-  {
-    sections.map((section) => (
-      <section class="section" aria-labelledby={section.id}>
-        <h2 id={section.id}>
-          <a href={localizedPath(lang, `/${section.id}`)}>{section.title[lang]}</a>
-        </h2>
-        <p class="lead">{section.lead[lang]}</p>
-        <ul class="grid">
-          {section.items.map((entry) => (
-            <ItemCard entry={entry} collection={section.id as ItemCollection} lang={lang} />
-          ))}
-        </ul>
-      </section>
-    ))
-  }
+  <section id="ways" class="band" aria-labelledby="ways-title">
+    <div class="wrap">
+      <header class="band-head">
+        <h2 id="ways-title">{text.ways.title}</h2>
+        <p class="lead">{text.ways.lead}</p>
+      </header>
+      <ul class="ways">
+        {
+          ways.map((way) => (
+            <li>
+              <a class="way" href={`${attractions}#${way.kind}`}>
+                <Photo id={way.photo} lang={lang} widths={[480, 720]} sizes="(min-width: 76rem) 24rem, (min-width: 52rem) 31vw, 92vw" decorative />
+                <span class="way-text">
+                  <strong>{t(lang, `kind.${way.kind}`)}</strong>
+                  <span>{way.text}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
 
-  <ContactCta lang={lang} />
+  <section class="band story" aria-labelledby="story-title">
+    <div class="wrap story-grid">
+      <div class="story-photo">
+        <Photo id="border-view" lang={lang} widths={[560, 800]} sizes="(min-width: 76rem) 34rem, (min-width: 60rem) 45vw, 92vw" />
+      </div>
+      <div>
+        <p class="eyebrow">{text.story.eyebrow}</p>
+        <h2 id="story-title">{text.story.title}</h2>
+        <ol class="steps">
+          {
+            text.story.steps.map((step) => (
+              <li>
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+                <p class="source">
+                  {text.sourceLabel}: <a href={sources[step.source].url}>{sources[step.source].title}</a>
+                </p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="featured-title">
+    <div class="wrap">
+      <header class="band-head split">
+        <h2 id="featured-title">{text.featured.title}</h2>
+        <a class="more-link" href={attractions}>{text.featured.all} →</a>
+      </header>
+      <ul class="cards">
+        {featured.map((entry) => <ItemCard entry={entry} collection="attractions" lang={lang} />)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="band seasons" aria-labelledby="seasons-title">
+    <div class="wrap seasons-grid">
+      <div>
+        <h2 id="seasons-title">{text.seasons.title}</h2>
+        <p class="lead">{text.seasons.lead}</p>
+        <dl class="season-list">
+          <div>
+            <dt>{text.seasons.wet.title}</dt>
+            <dd>{text.seasons.wet.text}</dd>
+          </div>
+          <div>
+            <dt>{text.seasons.dry.title}</dt>
+            <dd>{text.seasons.dry.text}</dd>
+          </div>
+        </dl>
+        <p class="source">
+          {text.sourceLabel}: <a href={sources[text.seasons.source].url}>{sources[text.seasons.source].title}</a>
+        </p>
+      </div>
+      <div class="seasons-photo">
+        <Photo id="river-summer" lang={lang} widths={[560, 800]} sizes="(min-width: 76rem) 34rem, (min-width: 60rem) 45vw, 92vw" />
+      </div>
+    </div>
+  </section>
+
+  <section class="band getting" aria-labelledby="getting-title">
+    <div class="wrap">
+      <header class="band-head">
+        <h2 id="getting-title">{text.getting.title}</h2>
+        <p class="lead">{text.getting.lead}</p>
+      </header>
+      <ul class="getting-list">
+        {
+          getting.map((way) => (
+            <li>
+              <svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true">
+                <path d={way.icon} fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <h3>{way.title}</h3>
+              <p>{way.text}</p>
+              <p class="source">
+                {text.sourceLabel}: <a href={sources[way.source].url}>{sources[way.source].title}</a>
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="actions">
+        <a class="button" href={visit}>{text.getting.more} →</a>
+      </p>
+    </div>
+  </section>
+
+  <PhotoCredits ids={shown} lang={lang} />
 </BaseLayout>

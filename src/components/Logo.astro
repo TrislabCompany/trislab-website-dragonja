@@ -1,15 +1,26 @@
 ---
-// The site's logo mark: a neutral sample, replace it with the brand's. One of
-// the two brand files with public/favicon.svg. Decorative: the name next to it
-// carries the meaning, so it is hidden from assistive technology.
+// The Dragonja mark, drawn from the logo of the earlier site: a bowl of the
+// valley with the river (blue), the hills (green) and the earth (brown).
+// Decorative: the name next to it carries the meaning. public/favicon.svg is
+// the same drawing.
 interface Props {
   size?: number;
+  /** Where the logo is ("header", "footer"): it names the clip path, unique on the page. */
+  place?: string;
 }
 
-const { size = 36 } = Astro.props;
+const { size = 40, place = "header" } = Astro.props;
+const id = `logo-${place}`;
 ---
 
-<svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true">
-  <rect width="32" height="32" rx="6" fill="#2457c5"></rect>
-  <path d="M8 10h16v3h-6.5v11h-3V13H8z" fill="#ffffff"></path>
+<svg class="logo" width={size} height={Math.round(size * 0.875)} viewBox="0 0 64 56" aria-hidden="true">
+  <clipPath id={id}>
+    <path d="M4 15C4 6 14 1 23 7c5 3.5 13 3.5 18 0C50 1 60 6 60 15c0 21-14 38-28 38S4 36 4 15Z"></path>
+  </clipPath>
+  <g clip-path={`url(#${id})`}>
+    <rect width="64" height="56" fill="#8cc43f"></rect>
+    <path d="M0 0h44C37 17 18 22 0 23Z" fill="#3aa6d8"></path>
+    <path d="M0 42c18-11 40-13 64-15v29H0Z" fill="#7b6753"></path>
+    <path d="M44 0C37 17 18 22 0 23M0 42c18-11 40-13 64-15" fill="none" stroke="#ffffff" stroke-width="2.5"></path>
+  </g>
 </svg>

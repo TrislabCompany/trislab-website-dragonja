@@ -1,0 +1,34 @@
+---
+// The credits of the photos on a page: author, licence and source, as the
+// Creative Commons licences ask. Each page lists the photos it shows.
+import { t, type Lang } from "../i18n";
+import { photo } from "../lib/photos";
+
+interface Props {
+  ids: string[];
+  lang: Lang;
+}
+
+const { ids, lang } = Astro.props;
+const credits = [...new Set(ids)].map((id) => ({ id, ...photo(id).credit }));
+---
+
+<aside class="photo-credits wrap" aria-label={t(lang, "photos.title")}>
+  <h2>{t(lang, "photos.title")}</h2>
+  <ul>
+    {
+      credits.map(({ author, licence, licenceUrl, source }) => (
+        <li>
+          <a href={source}>{author}</a>
+          {licenceUrl ? (
+            <>
+              , <a href={licenceUrl}>{licence}</a>
+            </>
+          ) : (
+            licence !== "©" && <>, {licence}</>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</aside>

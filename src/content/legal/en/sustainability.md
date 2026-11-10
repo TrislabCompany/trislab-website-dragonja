@@ -9,8 +9,8 @@ description: The carbon footprint of this site and what is done to keep it low.
 
 | Indicator | Value |
 | --- | --- |
-| Average page weight | about 135 KB |
-| Emissions per page view | about 0.02 g CO₂e |
+| Average page weight | about 320 KB |
+| Emissions per page view | about 0.05 g CO₂e |
 | JavaScript | none |
 | Cookies, trackers, third-party scripts | none |
 

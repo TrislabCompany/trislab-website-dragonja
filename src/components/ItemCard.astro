@@ -1,9 +1,11 @@
 ---
-// An item in a list: title, summary and a link to its page.
+// An attraction in a list: its photo, kind, title, summary and where it is.
+// The whole card is one link (the heading's link stretches over it).
 import type { CollectionEntry } from "astro:content";
 import { localizedPath, t, type Lang } from "../i18n";
 import { entrySlug } from "../lib/content";
 import type { ItemCollection } from "../lib/items";
+import Photo from "./Photo.astro";
 
 interface Props {
   entry: CollectionEntry<ItemCollection>;
@@ -16,12 +18,19 @@ interface Props {
 const { entry, collection, lang, level = 3 } = Astro.props;
 const Heading = `h${level}` as const;
 const href = localizedPath(lang, `/${collection}/${entrySlug(entry)}`);
+const { title, summary, kind, photo, where } = entry.data;
 ---
 
 <li>
-  <article class="card">
-    <Heading><a href={href}>{entry.data.title}</a></Heading>
-    <p>{entry.data.summary}</p>
-    <a class="more" href={href} aria-hidden="true" tabindex="-1">{t(lang, "cta.readMore")} →</a>
+  <article class="photo-card">
+    <div class="photo-card-image">
+      <Photo id={photo} lang={lang} widths={[400, 600]} sizes="(min-width: 76rem) 23rem, (min-width: 40rem) 45vw, 92vw" decorative />
+    </div>
+    <div class="photo-card-body">
+      <p class="kind">{t(lang, `kind.${kind}` as const)}</p>
+      <Heading><a href={href}>{title}</a></Heading>
+      <p>{summary}</p>
+      <p class="where">{where}</p>
+    </div>
   </article>
 </li>

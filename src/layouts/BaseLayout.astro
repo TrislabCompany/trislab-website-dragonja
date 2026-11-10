@@ -8,6 +8,9 @@ import "../styles/tokens.css";
 import "../styles/global.css";
 // The Latin subset of the font in src/styles/tokens.css, loaded early so text is drawn once, in it.
 import interLatin from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
+import frauncesLatin from "@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2?url";
+import { getImage } from "astro:assets";
+import { photo } from "../lib/photos";
 
 interface Props {
   title: string;
@@ -17,9 +20,22 @@ interface Props {
   available?: readonly Lang[];
   /** Leave the page out of search engines (the 404 page). */
   noindex?: boolean;
+  /** A full-width page (the home page): the header lies over its first section. */
+  wide?: boolean;
+  /** The photo id shared on social media; by default the valley. */
+  share?: string;
 }
 
-const { title, description = site.description[Astro.props.lang], lang, available = languages, noindex } = Astro.props;
+const {
+  title,
+  description = site.description[Astro.props.lang],
+  lang,
+  available = languages,
+  noindex,
+  wide = false,
+  share = "valley-cascade",
+} = Astro.props;
+const shareImage = await getImage({ src: photo(share).src, width: 1200, height: 630, fit: "cover", format: "jpg" });
 
 // The page without its language prefix, for the alternates and the switch.
 const path = unlocalizedPath(Astro.url.pathname);
@@ -36,6 +52,7 @@ const fullTitle = title === site.name ? title : `${title} | ${site.name}`;
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={frauncesLatin} as="font" type="font/woff2" crossorigin />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{fullTitle}</title>
     {!noindex && <link rel="canonical" href={absolute(lang)} />}
@@ -53,12 +70,16 @@ const fullTitle = title === site.name ? title : `${title} | ${site.name}`;
     <meta property="og:url" content={absolute(lang)} />
     <meta property="og:locale" content={ogLocale(lang)} />
     {alternates.filter((other) => other !== lang).map((other) => <meta property="og:locale:alternate" content={ogLocale(other)} />)}
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={new URL(shareImage.src, site.url).toString()} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={photo(share).alt[lang]} />
+    <meta name="twitter:card" content="summary_large_image" />
     <StructuredData />
   </head>
-  <body>
+  <body class={wide ? "wide" : undefined}>
     <a class="skip-link" href="#main">{t(lang, "nav.skip")}</a>
-    <Header lang={lang} path={path} available={available} />
+    <Header lang={lang} path={path} available={available} overlay={wide} />
     <main id="main" tabindex="-1">
       <slot />
     </main>

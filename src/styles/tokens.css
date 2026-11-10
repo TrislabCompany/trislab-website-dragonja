@@ -46,16 +46,64 @@
   line-gap-override: 0%;
 }
 
+/* Fraunces, a soft old-style serif, for headings: the warmth of Istrian
+   stone next to the clean Inter of the text. Self-hosted from
+   @fontsource-variable/fraunces, Latin and Latin Extended, weight axis only. */
+@font-face {
+  font-family: "Fraunces Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-ext-wght-normal.woff2")
+    format("woff2-variations");
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF,
+    U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Fraunces Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2")
+    format("woff2-variations");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+    U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Georgia sized like Fraunces until it has loaded. */
+@font-face {
+  font-family: "Fraunces Fallback";
+  src: local("Georgia");
+  size-adjust: 104%;
+}
+
+/* The colours come from the logo: the river (blue), the hills (green) and
+   the earth (brown), on the warm white of Istrian stone. The bright logo
+   colours are for shapes only; text uses the deep tones, which pass 4.5:1. */
 :root {
-  --background: #ffffff;
-  --surface: #f8f9fa;
-  --surface-strong: #e9ebf0;
-  --border: #d4d8e0;
-  --text: #2c3e50;
-  --muted: #566073;
-  --accent: #21618c;
-  --accent-text: #2c3e50;
+  --background: #fbf8f3;
+  --surface: #f2ece1;
+  --surface-strong: #e6ddcc;
+  --border: #d8cdb9;
+  --text: #1c2a2e;
+  --muted: #574f45;
+  --accent: #0b5878;
+  --accent-text: #0b5878;
   --accent-contrast: #ffffff;
-  --radius: 0.75rem;
+  --radius: 1rem;
   --font-family: "Inter Variable", "Inter Fallback", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Fraunces Variable", "Fraunces Fallback", Georgia, serif;
+
+  /* The logo's colours and their deep tones. */
+  --river: #3aa6d8;
+  --river-deep: #0b5878;
+  --hill: #8cc43f;
+  --hill-deep: #3c6620;
+  --earth: #7b6753;
+  --night: #102a33;
+  --on-night: #f2ece1;
+  --on-night-muted: #c9bfae;
 }

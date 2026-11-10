@@ -10,6 +10,34 @@ The site is also the pilot of the template's init script: its first pull request
 
 **A custom design.** The brief is "impress us": a new design for a nature and culture destination, mobile first, led by large photographs of the valley. Today's colours (dark blue #2c3e50, blues #3498db and #2980b9, light background #f8f9fa) and the Poppins font are the starting point, not a constraint. The tone is friendly. The init pull request sets a darker accent (#21618c) because white on #2980b9 fails the contrast check.
 
+## Design direction
+
+The template is only the frame (build, checks, languages, legal pages, hosting). The look is the site's own, in its `src/` (components, layouts, pages, styles).
+
+- **Feel:** a calm nature and culture destination, led by large photos of the valley, with generous white space. From the reference sites:
+  - soca-valley.com: the way from inspiration to action, with large image cards;
+  - lesachtal.com: one clear identity and seasonal advice;
+  - kpss.si: practical visit information.
+- **Colours** come from the logo: river blue, hill green and earth brown, on the warm white of Istrian stone. The bright logo colours are for shapes only. Text and buttons use the deep tones (deep river blue #0b5878 for buttons and links, ink #1c2a2e for text), and every pair passes 4.5:1. The "How to get here" band and the footer use a dark river tone (#102a33).
+- **Type:** Fraunces, a soft old-style serif, for headings, and Inter for text. Both are self-hosted.
+- **Photos:**
+  - shown full-bleed in the hero and as tall cards with the text on a dark gradient;
+  - AVIF at a few widths, lazy below the first screen;
+  - every photo is registered with its alternative text in every language and its credit, and each page lists the credits of the photos it shows;
+  - photos of the real places come from today's site or from freely licensed Wikimedia Commons photos.
+- **Home page, top to bottom:**
+  1. the hero: a full-screen photo, the title "Dolina Dragonje", one sentence, and two buttons ("Discover the valley", "Plan your visit"); the header lies over it;
+  2. three ways in (Nature, Culture, Activities) as large photo cards that lead to the attractions grouped by kind;
+  3. the story of the valley: four numbered steps (the river, the mills, the hamlets, the border), each with its source;
+  4. six featured attractions as photo cards;
+  5. when to come: autumn to spring, when the river flows, and summer, when it often dries up;
+  6. how to get here: by car, by bike on the Parenzana, on foot, in a dark band;
+  7. the photo credits and the footer.
+- **Other pages:**
+  - the attractions page groups the attractions by kind;
+  - each attraction page opens with its photo, then where it is, the text and its sources.
+- **Navigation:** on a phone the links fold into a menu that opens without JavaScript.
+
 ## Pages or modules
 
 Pages are built from the template's sections (`page-sections`):
@@ -69,6 +97,7 @@ The template's whole baseline, no exceptions: `responsive-layout` (mobile first,
 - **Available on today's site:** the logo (`assets/images/logo.jpg`, a JPG only: draw an SVG from it), the photos in `assets/images/` (`hero.webp` is the share image), the texts in four languages (`assets/i18n/<lang>.json`).
 - **To make:** the SVG logo and favicon; the texts for the attractions and the four pages; the German translation; the static map image; the privacy notice from the template's draft.
 - **Placeholders:** a missing photo gets a placeholder that is replaced before production.
+- **Photos of the earlier site:** two of its five photos show no known place (a family on bikes in a forest, a river that may not be the Dragonja) and are not used. The hero and the stone house are used. Where they were taken, and who may publish them, is checked before production.
 
 ## Acceptance criteria
 

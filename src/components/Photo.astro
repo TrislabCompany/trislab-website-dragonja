@@ -1,0 +1,43 @@
+---
+// A photo from src/lib/photos.ts, in AVIF at a few widths (every browser the
+// site supports reads AVIF, and the page-weight check counts one file per
+// photo). Lazy unless `eager`: only the first photo of a page is eager.
+import { Image } from "astro:assets";
+import type { Lang } from "../i18n";
+import { photo } from "../lib/photos";
+
+interface Props {
+  id: string;
+  lang: Lang;
+  /** The widths to build, in pixels; the largest is what the budget counts. */
+  widths: number[];
+  /** The `sizes` attribute: how wide the photo is shown. */
+  sizes: string;
+  eager?: boolean;
+  class?: string;
+  /** Leave the alternative text empty: the photo only decorates a card whose heading says it all. */
+  decorative?: boolean;
+}
+
+const { id, lang, widths, sizes, eager = false, class: className, decorative = false } = Astro.props;
+const { src, alt, focus } = photo(id);
+// The fallback `src` is the largest width built, never the original file.
+const width = Math.min(Math.max(...widths), src.width);
+const height = Math.round((width * src.height) / src.width);
+---
+
+<Image
+  src={src}
+  alt={decorative ? "" : alt[lang]}
+  widths={widths.filter((w) => w <= width)}
+  width={width}
+  height={height}
+  sizes={sizes}
+  format="avif"
+  quality={50}
+  loading={eager ? "eager" : "lazy"}
+  fetchpriority={eager ? "high" : undefined}
+  decoding={eager ? "sync" : "async"}
+  class={className}
+  style={focus ? `object-position: ${focus}` : undefined}
+/>

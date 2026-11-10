@@ -1,7 +1,8 @@
 ---
 import { render, type CollectionEntry } from "astro:content";
-import ContactCta from "../../../components/ContactCta.astro";
-import { localizedPath, type Lang } from "../../../i18n";
+import Photo from "../../../components/Photo.astro";
+import PhotoCredits from "../../../components/PhotoCredits.astro";
+import { localizedPath, t, type Lang } from "../../../i18n";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { collectionSettings, itemPaths, type ItemCollection } from "../../../lib/items";
 
@@ -15,23 +16,36 @@ const { entry, lang, collection, available } = Astro.props as {
 };
 const settings = collectionSettings(collection);
 const { Content } = await render(entry);
+const { title, summary, kind, photo, where, sources } = entry.data;
 ---
 
-<BaseLayout title={entry.data.title} description={entry.data.summary} lang={lang} available={available}>
-  <article class="prose">
-    <p class="eyebrow"><a href={localizedPath(lang, `/${collection}`)}>{settings.title[lang]}</a></p>
-    <h1>{entry.data.title}</h1>
-    <p class="lead">{entry.data.summary}</p>
-    <Content />
-    {
-      entry.data.tags.length > 0 && (
-        <ul class="tags">
-          {entry.data.tags.map((tag) => (
-            <li>{tag}</li>
-          ))}
-        </ul>
-      )
-    }
+<BaseLayout title={title} description={summary} lang={lang} available={available} share={photo}>
+  <article class="item">
+    <div class="item-photo">
+      <Photo id={photo} lang={lang} widths={[640, 1024, 1440]} sizes="(min-width: 72rem) 70rem, 100vw" eager />
+    </div>
+    <div class="prose">
+      <p class="eyebrow">
+        <a href={localizedPath(lang, `/${collection}`)}>{settings.title[lang]}</a> · {t(lang, `kind.${kind}`)}
+      </p>
+      <h1>{title}</h1>
+      <p class="lead">{summary}</p>
+      <dl class="facts">
+        <dt>{t(lang, "item.where")}</dt>
+        <dd>{where}</dd>
+      </dl>
+      <Content />
+      <h2 class="sources-title">{t(lang, "item.sources")}</h2>
+      <ul class="sources">
+        {
+          sources.map((source) => (
+            <li>
+              <a href={source.url}>{source.title}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
   </article>
-  <ContactCta lang={lang} />
+  <PhotoCredits ids={[photo]} lang={lang} />
 </BaseLayout>

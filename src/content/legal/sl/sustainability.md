@@ -9,8 +9,8 @@ description: Ogljični odtis te strani in kaj se naredi, da je čim manjši.
 
 | Kazalnik | Vrednost |
 | --- | --- |
-| Povprečna velikost strani | približno 135 KB |
-| Izpusti na ogled strani | približno 0,02 g CO₂e |
+| Povprečna velikost strani | približno 320 KB |
+| Izpusti na ogled strani | približno 0,05 g CO₂e |
 | JavaScript | brez |
 | Piškotki, sledilniki, skripte tretjih oseb | brez |
 
