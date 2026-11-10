@@ -19,6 +19,9 @@ const groups = kinds.map((kind) => ({ kind, items: items.filter((entry) => entry
   <div class="page-head">
     <h1>{settings.title[lang]}</h1>
     <p class="lead">{settings.lead[lang]}</p>
+    <nav class="kind-nav" aria-label={t(lang, "nav.onPage")}>
+      {groups.map((group) => <a href={`#${group.kind}`}>{t(lang, `kind.${group.kind}`)}</a>)}
+    </nav>
   </div>
   {
     groups.map((group) => (

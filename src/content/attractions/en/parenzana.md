@@ -5,7 +5,7 @@ order: 3
 kind: activity
 photo: parenzana
 where: "Through Sečovlje, below the valley"
-featured: true
+featured: false
 sources:
   - title: "Wikipedia: Parenzana"
     url: https://en.wikipedia.org/wiki/Parenzana

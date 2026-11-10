@@ -5,7 +5,7 @@ order: 6
 kind: place
 photo: sveti-peter
 where: "Na griču nad dolino"
-featured: true
+featured: false
 sources:
   - title: "Portorož"
     url: https://www.portoroz.si/sl/informacije/uporabne-informacije/blog/read/63805-skrivnosti-istrskih-vasi-in-poti-med-oljkami/

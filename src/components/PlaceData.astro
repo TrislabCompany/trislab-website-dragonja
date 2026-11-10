@@ -1,0 +1,43 @@
+---
+// Structured data (JSON-LD) for search engines, built here because the
+// publisher is not the subject (src/site.config.ts structuredData: "none"):
+// the valley as a TouristDestination on the home page, an attraction as a
+// TouristAttraction with its point and photo. A script of type
+// application/ld+json is data, never run, so the Content-Security-Policy
+// doesn't block it.
+import site from "../site.config";
+import type { Point } from "../lib/places";
+
+interface Props {
+  type: "TouristDestination" | "TouristAttraction";
+  name: string;
+  description: string;
+  url: string;
+  image?: string;
+  point?: Point;
+  /** For the destination: the pages of its attractions. */
+  includes?: { name: string; url: string }[];
+}
+
+const { type, name, description, url, image, point, includes } = Astro.props;
+const absolute = (path: string) => new URL(path, site.url).toString();
+const data = {
+  "@context": "https://schema.org",
+  "@type": type,
+  name,
+  description,
+  url: absolute(url),
+  ...(image ? { image: absolute(image) } : {}),
+  ...(point ? { geo: { "@type": "GeoCoordinates", latitude: point.lat, longitude: point.lon } } : {}),
+  ...(type === "TouristAttraction"
+    ? { containedInPlace: { "@type": "TouristDestination", name: "Dolina Dragonje", url: site.url } }
+    : {}),
+  ...(includes?.length
+    ? { includesAttraction: includes.map((item) => ({ "@type": "TouristAttraction", name: item.name, url: absolute(item.url) })) }
+    : {}),
+};
+// "<" is escaped so the text can never close the script element.
+const json = JSON.stringify(data).replace(/</g, "\u003c");
+---
+
+<script type="application/ld+json" is:inline set:html={json} />

@@ -1,0 +1,177 @@
+---
+// Visit us: how to get here, good to know, when to come, the map and the
+// gallery. Texts in src/texts/pages.ts and src/texts/home.ts (the seasons).
+// No photo shows twice on the page (scripts/check-design.mjs).
+import { getImage } from "astro:assets";
+import PageHero from "../../components/PageHero.astro";
+import Photo from "../../components/Photo.astro";
+import PhotoCredits from "../../components/PhotoCredits.astro";
+import ValleyMap from "../../components/ValleyMap.astro";
+import { languagePaths, localizedPath, type Lang } from "../../i18n";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { entrySlug } from "../../lib/content";
+import { icons } from "../../lib/icons";
+import { sortedItems } from "../../lib/items";
+import { photo } from "../../lib/photos";
+import { attractionPoints } from "../../lib/places";
+import site from "../../site.config";
+import { home, sources } from "../../texts/home";
+import { galleryPhotos, visit } from "../../texts/pages";
+
+export const getStaticPaths = languagePaths;
+
+const { lang } = Astro.props as { lang: Lang };
+const text = visit[lang];
+const seasons = home[lang].seasons;
+const hero = "valley-edge";
+const seasonsPhoto = "river-summer";
+const ways = [
+  { ...text.getting.car, icon: icons.car },
+  { ...text.getting.bike, icon: icons.bike },
+  { ...text.getting.foot, icon: icons.foot },
+];
+// The attractions with a point, numbered in their list order.
+const markers = (await sortedItems("attractions", lang))
+  .filter((entry) => entrySlug(entry) in attractionPoints)
+  .map((entry, index) => ({
+    n: index + 1,
+    title: entry.data.title,
+    href: localizedPath(lang, `/attractions/${entrySlug(entry)}`),
+    point: attractionPoints[entrySlug(entry)]!,
+  }));
+// Each gallery photo links to a larger copy of itself.
+const gallery = await Promise.all(
+  galleryPhotos.map(async (id) => ({
+    id,
+    large: (await getImage({ src: photo(id).src, width: Math.min(1600, photo(id).src.width), format: "avif", quality: 60 })).src,
+  })),
+);
+const shown = [hero, seasonsPhoto, ...galleryPhotos];
+const mail = site.contact.topics[0]?.email;
+---
+
+<BaseLayout title={text.title} description={text.lead} lang={lang} wide share={hero}>
+  <PageHero photo={hero} lang={lang} title={text.title} lead={text.lead} />
+
+  <section class="band getting" aria-labelledby="getting-title">
+    <div class="wrap">
+      <header class="band-head">
+        <h2 id="getting-title">{text.getting.title}</h2>
+      </header>
+      <ul class="getting-list">
+        {
+          ways.map((way) => (
+            <li>
+              <svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true">
+                <path d={way.icon} fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <h3>{way.title}</h3>
+              <p>{way.text}</p>
+              {way.source && (
+                <p class="source">
+                  {text.sourceLabel}: <a href={sources[way.source].url}>{sources[way.source].title}</a>
+                </p>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="tips-title">
+    <div class="wrap">
+      <header class="band-head">
+        <h2 id="tips-title">{text.tips.title}</h2>
+      </header>
+      <ul class="tips">
+        {
+          text.tips.items.map((tip) => (
+            <li>
+              <h3>{tip.title}</h3>
+              <p>{tip.text}</p>
+              {tip.source && (
+                <p class="source">
+                  {text.sourceLabel}: <a href={sources[tip.source].url}>{sources[tip.source].title}</a>
+                </p>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="band seasons" aria-labelledby="seasons-title">
+    <div class="wrap seasons-grid">
+      <div>
+        <h2 id="seasons-title">{seasons.title}</h2>
+        <p class="lead">{seasons.lead}</p>
+        <dl class="season-list">
+          <div>
+            <dt>{seasons.wet.title}</dt>
+            <dd>{seasons.wet.text}</dd>
+          </div>
+          <div>
+            <dt>{seasons.dry.title}</dt>
+            <dd>{seasons.dry.text}</dd>
+          </div>
+        </dl>
+        <p class="source">
+          {text.sourceLabel}: <a href={sources[seasons.source].url}>{sources[seasons.source].title}</a>
+        </p>
+      </div>
+      <div class="seasons-photo">
+        <Photo id={seasonsPhoto} lang={lang} widths={[560, 720]} sizes="(min-width: 76rem) 34rem, (min-width: 60rem) 45vw, 92vw" />
+      </div>
+    </div>
+  </section>
+
+  <section id="map" class="band" aria-labelledby="map-title">
+    <div class="wrap">
+      <header class="band-head">
+        <h2 id="map-title">{text.map.title}</h2>
+        <p class="lead">{text.map.lead}</p>
+      </header>
+      <ValleyMap lang={lang} markers={markers} text={text.map} />
+    </div>
+  </section>
+
+  <section id="gallery" class="band gallery-band" aria-labelledby="gallery-title">
+    <div class="wrap">
+      <header class="band-head">
+        <h2 id="gallery-title">{text.gallery.title}</h2>
+        <p class="lead">{text.gallery.lead}</p>
+      </header>
+      <ul class="gallery">
+        {
+          gallery.map(({ id, large }) => (
+            <li>
+              <a href={large} title={text.gallery.open}>
+                <Photo id={id} lang={lang} widths={[360, 540]} sizes="(min-width: 76rem) 17rem, (min-width: 40rem) 30vw, 46vw" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {
+    mail && (
+      <section class="band contact-band" aria-labelledby="contact-title">
+        <div class="wrap">
+          <h2 id="contact-title">{text.contact.title}</h2>
+          <p class="lead">{text.contact.text}</p>
+          <p class="actions">
+            <a class="button" href={`mailto:${mail}`}>
+              {mail}
+            </a>
+          </p>
+        </div>
+      </section>
+    )
+  }
+
+  <PhotoCredits ids={shown} lang={lang} />
+</BaseLayout>

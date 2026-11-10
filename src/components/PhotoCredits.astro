@@ -10,15 +10,25 @@ interface Props {
 }
 
 const { ids, lang } = Astro.props;
-const credits = [...new Set(ids)].map((id) => ({ id, ...photo(id).credit }));
+// One line per credit: two photos with the same author, licence and source
+// share it, and the line carries the ids of all of them.
+const byCredit = new Map<string, { ids: string[]; author: string; licence: string; licenceUrl?: string; source: string }>();
+for (const id of new Set(ids)) {
+  const credit = photo(id).credit;
+  const key = `${credit.author}|${credit.licence}|${credit.source}`;
+  const line = byCredit.get(key) ?? { ids: [], ...credit };
+  line.ids.push(id);
+  byCredit.set(key, line);
+}
+const credits = [...byCredit.values()];
 ---
 
 <aside class="photo-credits wrap" aria-label={t(lang, "photos.title")}>
   <h2>{t(lang, "photos.title")}</h2>
   <ul>
     {
-      credits.map(({ author, licence, licenceUrl, source }) => (
-        <li>
+      credits.map(({ ids, author, licence, licenceUrl, source }) => (
+        <li data-credit={ids.join(" ")}>
           <a href={source}>{author}</a>
           {licenceUrl ? (
             <>

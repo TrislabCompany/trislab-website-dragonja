@@ -12,6 +12,7 @@ const { lang } = Astro.props;
 const pages = [
   ...site.collections.filter((collection) => collection.nav).map((collection) => ({ href: `/${collection.id}`, label: collection.title[lang] })),
   { href: "/about", label: t(lang, "nav.about") },
+  { href: "/visit-us", label: t(lang, "nav.visit") },
   { href: "/contact", label: t(lang, "nav.contact") },
 ];
 const legal = [

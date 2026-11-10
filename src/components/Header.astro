@@ -20,7 +20,7 @@ const { lang, path, available, overlay = false } = Astro.props;
 const links = [
   ...site.collections.filter((collection) => collection.nav).map((collection) => ({ href: `/${collection.id}`, label: collection.title[lang] })),
   { href: "/about", label: t(lang, "nav.about") },
-  { href: "/contact", label: t(lang, "nav.contact") },
+  { href: "/visit-us", label: t(lang, "nav.visit") },
 ];
 // A section's link stays marked on its detail pages (/attractions/padna).
 const current = (href: string) => path === href || path.startsWith(`${href}/`);

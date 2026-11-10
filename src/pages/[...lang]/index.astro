@@ -4,6 +4,8 @@ import Photo from "../../components/Photo.astro";
 import PhotoCredits from "../../components/PhotoCredits.astro";
 import { languagePaths, localizedPath, t, type Lang } from "../../i18n";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { icons } from "../../lib/icons";
+import { entrySlug } from "../../lib/content";
 import { sortedItems } from "../../lib/items";
 import site from "../../site.config";
 import { home, sources } from "../../texts/home";
@@ -12,24 +14,37 @@ export const getStaticPaths = languagePaths;
 
 const { lang } = Astro.props as { lang: Lang };
 const text = home[lang];
-const featured = (await sortedItems("attractions", lang)).filter((entry) => entry.data.featured).slice(0, 6);
 const attractions = localizedPath(lang, "/attractions");
-const visit = localizedPath(lang, "/contact");
+const visit = localizedPath(lang, "/visit-us");
 const ways = [
   { kind: "nature", photo: "valley-view", text: text.ways.nature },
   { kind: "culture", photo: "stone-house", text: text.ways.culture },
   { kind: "activity", photo: "parenzana", text: text.ways.activity },
 ] as const;
+// A photo shows once per page: a featured attraction whose photo is already
+// on the page is skipped (scripts/check-design.mjs fails the build otherwise).
+const fixed = ["valley-cascade", ...ways.map((way) => way.photo), "border-view", "river-summer"];
+const featured = (await sortedItems("attractions", lang))
+  .filter((entry) => entry.data.featured && !fixed.includes(entry.data.photo))
+  .slice(0, 6);
 const getting = [
-  { ...text.getting.car, icon: "M5 17h14M6 17l1.5-5h9L18 17M7.5 12 9 8h6l1.5 4M7 20v-3M17 20v-3" },
-  { ...text.getting.bike, icon: "M6 17a3 3 0 1 0 0-.01M18 17a3 3 0 1 0 0-.01M6 17l4-7h5l3 7M10 10 8.5 7H7M15 10l-2 7" },
-  { ...text.getting.foot, icon: "M13 4a1.5 1.5 0 1 0 0 .01M10 21l2-6 3 3v3M12 15l-1-5 4 1 2 3M11 10l-3 3" },
+  { ...text.getting.car, icon: icons.car },
+  { ...text.getting.bike, icon: icons.bike },
+  { ...text.getting.foot, icon: icons.foot },
 ];
 // The photos on this page, for the credits at its end.
-const shown = ["valley-cascade", ...ways.map((way) => way.photo), "border-view", ...featured.map((entry) => entry.data.photo), "river-summer"];
+const all = await sortedItems("attractions", lang);
+const place = {
+  type: "TouristDestination" as const,
+  name: text.hero.title,
+  description: site.description[lang],
+  url: localizedPath(lang),
+  includes: all.map((entry) => ({ name: entry.data.title, url: localizedPath(lang, `/attractions/${entrySlug(entry)}`) })),
+};
+const shown = [...fixed, ...featured.map((entry) => entry.data.photo)];
 ---
 
-<BaseLayout title={site.name} lang={lang} wide>
+<BaseLayout title={site.name} lang={lang} wide place={place}>
   <section class="hero" aria-labelledby="hero-title">
     <Photo id="valley-cascade" lang={lang} widths={[640, 1024, 1600]} sizes="100vw" eager class="hero-photo" />
     <div class="hero-shade"></div>
@@ -55,7 +70,7 @@ const shown = ["valley-cascade", ...ways.map((way) => way.photo), "border-view",
           ways.map((way) => (
             <li>
               <a class="way" href={`${attractions}#${way.kind}`}>
-                <Photo id={way.photo} lang={lang} widths={[480, 720]} sizes="(min-width: 76rem) 24rem, (min-width: 52rem) 31vw, 92vw" decorative />
+                <Photo id={way.photo} lang={lang} widths={[440, 640]} sizes="(min-width: 76rem) 24rem, (min-width: 52rem) 31vw, 92vw" decorative />
                 <span class="way-text">
                   <strong>{t(lang, `kind.${way.kind}`)}</strong>
                   <span>{way.text}</span>
@@ -71,7 +86,7 @@ const shown = ["valley-cascade", ...ways.map((way) => way.photo), "border-view",
   <section class="band story" aria-labelledby="story-title">
     <div class="wrap story-grid">
       <div class="story-photo">
-        <Photo id="border-view" lang={lang} widths={[560, 800]} sizes="(min-width: 76rem) 34rem, (min-width: 60rem) 45vw, 92vw" />
+        <Photo id="border-view" lang={lang} widths={[560, 720]} sizes="(min-width: 76rem) 34rem, (min-width: 60rem) 45vw, 92vw" />
       </div>
       <div>
         <p class="eyebrow">{text.story.eyebrow}</p>
@@ -125,7 +140,7 @@ const shown = ["valley-cascade", ...ways.map((way) => way.photo), "border-view",
         </p>
       </div>
       <div class="seasons-photo">
-        <Photo id="river-summer" lang={lang} widths={[560, 800]} sizes="(min-width: 76rem) 34rem, (min-width: 60rem) 45vw, 92vw" />
+        <Photo id="river-summer" lang={lang} widths={[560, 720]} sizes="(min-width: 76rem) 34rem, (min-width: 60rem) 45vw, 92vw" />
       </div>
     </div>
   </section>

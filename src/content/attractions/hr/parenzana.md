@@ -5,7 +5,7 @@ order: 3
 kind: activity
 photo: parenzana
 where: "Kroz Sečovlje, ispod doline"
-featured: true
+featured: false
 sources:
   - title: "Wikipedia: Parenzana"
     url: https://en.wikipedia.org/wiki/Parenzana

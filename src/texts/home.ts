@@ -8,6 +8,8 @@ export const sources = {
   wikiSl: { title: "Wikipedija: Dragonja", url: "https://sl.wikipedia.org/wiki/Dragonja" },
   wikiEn: { title: "Wikipedia: Dragonja", url: "https://en.wikipedia.org/wiki/Dragonja" },
   wikiVillage: { title: "Wikipedia: Dragonja, Piran", url: "https://en.wikipedia.org/wiki/Dragonja,_Piran" },
+  wikiVillageSl: { title: "Wikipedija: Dragonja (Piran)", url: "https://sl.wikipedia.org/wiki/Dragonja,_Piran" },
+  kpss: { title: "Krajinski park Sečoveljske soline", url: "https://www.kpss.si/en/visiting" },
   parks: {
     title: "Naravni parki Slovenije",
     url: "https://naravniparkislovenije.si/en/sights/unprotected-areas",
@@ -81,7 +83,7 @@ const sl: HomeTexts = {
       },
       {
         title: "Zaselki",
-        text: "Vas Dragonja je nastala leta 1960 iz raztresenih zaselkov, med njimi Gočan, Križišče, Stena, Mlini in Rota.",
+        text: "Vas Dragonja je zrasla iz raztresenih zaselkov ob cesti Šmarje–Buje, med njimi Gočan, Križišče, Stena, Mlini in Rota.",
         source: "wikiVillage",
       },
       {
@@ -159,7 +161,7 @@ const en: HomeTexts = {
       },
       {
         title: "The hamlets",
-        text: "The village of Dragonja was made in 1960 from scattered hamlets, among them Gočan, Križišče, Stena, Mlini and Rota.",
+        text: "The village of Dragonja grew from scattered hamlets along the Šmarje–Buje road, among them Gočan, Križišče, Stena, Mlini and Rota.",
         source: "wikiVillage",
       },
       {
@@ -237,7 +239,7 @@ const hr: HomeTexts = {
       },
       {
         title: "Zaseoci",
-        text: "Selo Dragonja nastalo je 1960. od raštrkanih zaselaka, među njima Gočan, Križišče, Stena, Mlini i Rota.",
+        text: "Selo Dragonja nastalo je od raštrkanih zaselaka uz cestu Šmarje–Buje, među njima Gočan, Križišče, Stena, Mlini i Rota.",
         source: "wikiVillage",
       },
       {
@@ -315,7 +317,7 @@ const it: HomeTexts = {
       },
       {
         title: "Le frazioni",
-        text: "Il paese di Dragogna è nato nel 1960 da frazioni sparse, tra cui Gočan, Križišče, Stena, Mlini e Rota.",
+        text: "Il paese di Dragogna è nato da frazioni sparse lungo la strada Šmarje–Buie, tra cui Gočan, Križišče, Stena, Mlini e Rota.",
         source: "wikiVillage",
       },
       {
@@ -393,7 +395,7 @@ const de: HomeTexts = {
       },
       {
         title: "Die Weiler",
-        text: "Das Dorf Dragonja entstand 1960 aus verstreuten Weilern, darunter Gočan, Križišče, Stena, Mlini und Rota.",
+        text: "Das Dorf Dragonja entstand aus verstreuten Weilern an der Straße Šmarje–Buje, darunter Gočan, Križišče, Stena, Mlini und Rota.",
         source: "wikiVillage",
       },
       {

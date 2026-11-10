@@ -24,7 +24,7 @@ const site: SiteSettings<Lang> = {
   },
   languages: languages,
   defaultLanguage: "sl",
-  themeColor: "#2c3e50",
+  themeColor: "#102a33",
   collections: [
     {
       id: "attractions",

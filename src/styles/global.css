@@ -1038,3 +1038,349 @@ main th {
     padding: 0 0.75rem;
   }
 }
+
+/* Page heads: the hero, smaller, on About and Visit us. */
+
+.hero.compact {
+  min-height: max(26rem, min(70svh, 40rem));
+}
+
+.hero.compact h1 {
+  max-width: 18ch;
+}
+
+.button.secondary {
+  background: transparent;
+  color: var(--accent-text);
+  border-color: var(--accent);
+}
+
+.button.secondary:hover {
+  background: var(--surface);
+}
+
+/* About: chapters, a photo and the text side by side, alternating. */
+
+.chapter.alt {
+  background: var(--surface);
+}
+
+.chapter-grid {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+}
+
+.chapter-photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+.chapter-text {
+  max-width: 38rem;
+}
+
+.chapter-text .eyebrow {
+  color: var(--hill-deep);
+}
+
+@media (min-width: 60rem) {
+  .chapter-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .chapter.alt .chapter-photo {
+    order: 2;
+  }
+}
+
+.next {
+  padding-top: 0;
+}
+
+/* Visit us: good to know, the map, the gallery and the contact. */
+
+.tips {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tips li {
+  padding: 1.5rem;
+  background: var(--surface);
+  border-top: 4px solid var(--hill);
+  border-radius: var(--radius);
+}
+
+.tips h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+}
+
+.tips p {
+  margin: 0 0 0.5rem;
+}
+
+.valley-map {
+  margin: 0;
+}
+
+.map-frame {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: #f4f1e8;
+}
+
+.map-frame:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.map-frame svg {
+  display: block;
+  width: 100%;
+  min-width: 46rem;
+  height: auto;
+}
+
+.map-land {
+  fill: #f4f1e8;
+}
+
+.map-coast,
+.map-roads,
+.map-main-roads,
+.map-streams,
+.map-river,
+.map-border,
+.map-trail {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.map-coast {
+  stroke: var(--river);
+  stroke-width: 6;
+}
+
+.map-roads {
+  stroke: #d9cfbd;
+  stroke-width: 4;
+}
+
+.map-main-roads {
+  stroke: #c4b59b;
+  stroke-width: 7;
+}
+
+.map-streams {
+  stroke: #8fc9e6;
+  stroke-width: 3;
+}
+
+.map-river {
+  stroke: var(--river);
+  stroke-width: 9;
+}
+
+.map-border {
+  stroke: #8a4f7d;
+  stroke-width: 4;
+  stroke-dasharray: 18 10 4 10;
+}
+
+.map-trail {
+  stroke: var(--earth);
+  stroke-width: 5;
+  stroke-dasharray: 2 12;
+}
+
+.map-village circle {
+  fill: var(--text);
+}
+
+.map-village text {
+  fill: var(--text);
+  font-family: var(--font-family);
+  font-size: 34px;
+  font-weight: 600;
+  paint-order: stroke;
+  stroke: #f4f1e8;
+  stroke-width: 8px;
+}
+
+.map-marker circle {
+  fill: var(--accent);
+  stroke: #ffffff;
+  stroke-width: 5;
+}
+
+.map-marker text {
+  fill: #ffffff;
+  font-family: var(--font-family);
+  font-size: 32px;
+  font-weight: 700;
+  text-anchor: middle;
+}
+
+.map-marker:hover circle,
+.map-marker:focus-visible circle {
+  fill: var(--night);
+}
+
+.map-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.map-key li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.key {
+  display: inline-block;
+  width: 1.75rem;
+  height: 0;
+  border-top: 4px solid;
+}
+
+.key-river {
+  border-color: var(--river);
+}
+
+.key-trail {
+  border-top-style: dotted;
+  border-color: var(--earth);
+}
+
+.key-border {
+  border-top-style: dashed;
+  border-color: #8a4f7d;
+}
+
+.key-roads {
+  border-color: #c4b59b;
+}
+
+.map-legend-title {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 1.125rem;
+}
+
+.map-legend {
+  columns: 16rem auto;
+  column-gap: 2rem;
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.map-legend li {
+  break-inside: avoid;
+  padding: 0.125rem 0;
+}
+
+.map-credit {
+  margin: 1rem 0 0;
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+
+.map-credit a {
+  color: inherit;
+}
+
+.gallery-band {
+  background: var(--surface);
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(46%, 15rem), 1fr));
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gallery a {
+  display: block;
+  overflow: hidden;
+  border-radius: calc(var(--radius) * 0.75);
+}
+
+.gallery img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.gallery a:hover img {
+  transform: scale(1.04);
+}
+
+.gallery a:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery img {
+    transition: none;
+  }
+}
+
+.contact-band {
+  text-align: center;
+}
+
+.contact-band .lead {
+  margin-inline: auto;
+}
+
+.contact-band .actions {
+  justify-content: center;
+}
+
+/* Attractions: jump links to the kinds. */
+
+.kind-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.kind-nav a {
+  padding: 0.375rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.kind-nav a:hover {
+  border-color: var(--accent);
+  color: var(--accent-text);
+}

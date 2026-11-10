@@ -5,7 +5,7 @@ order: 3
 kind: activity
 photo: parenzana
 where: "Skozi Sečovlje, pod dolino"
-featured: true
+featured: false
 sources:
   - title: "Wikipedia: Parenzana"
     url: https://en.wikipedia.org/wiki/Parenzana

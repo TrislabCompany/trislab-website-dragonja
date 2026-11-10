@@ -9,7 +9,9 @@ import "../styles/global.css";
 // The Latin subset of the font in src/styles/tokens.css, loaded early so text is drawn once, in it.
 import interLatin from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
 import frauncesLatin from "@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2?url";
+import type { ComponentProps } from "astro/types";
 import { getImage } from "astro:assets";
+import PlaceData from "../components/PlaceData.astro";
 import { photo } from "../lib/photos";
 
 interface Props {
@@ -24,6 +26,8 @@ interface Props {
   wide?: boolean;
   /** The photo id shared on social media; by default the valley. */
   share?: string;
+  /** Structured data for the page's place, with the share photo as its image. */
+  place?: Omit<ComponentProps<typeof PlaceData>, "image">;
 }
 
 const {
@@ -34,6 +38,7 @@ const {
   noindex,
   wide = false,
   share = "valley-cascade",
+  place,
 } = Astro.props;
 const shareImage = await getImage({ src: photo(share).src, width: 1200, height: 630, fit: "cover", format: "jpg" });
 
@@ -76,6 +81,7 @@ const fullTitle = title === site.name ? title : `${title} | ${site.name}`;
     <meta property="og:image:alt" content={photo(share).alt[lang]} />
     <meta name="twitter:card" content="summary_large_image" />
     <StructuredData />
+    {place && <PlaceData {...place} image={shareImage.src} />}
   </head>
   <body class={wide ? "wide" : undefined}>
     <a class="skip-link" href="#main">{t(lang, "nav.skip")}</a>

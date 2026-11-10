@@ -4,7 +4,9 @@ import Photo from "../../../components/Photo.astro";
 import PhotoCredits from "../../../components/PhotoCredits.astro";
 import { localizedPath, t, type Lang } from "../../../i18n";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { entrySlug } from "../../../lib/content";
 import { collectionSettings, itemPaths, type ItemCollection } from "../../../lib/items";
+import { attractionPoints } from "../../../lib/places";
 
 export const getStaticPaths = itemPaths;
 
@@ -17,9 +19,16 @@ const { entry, lang, collection, available } = Astro.props as {
 const settings = collectionSettings(collection);
 const { Content } = await render(entry);
 const { title, summary, kind, photo, where, sources } = entry.data;
+const place = {
+  type: "TouristAttraction" as const,
+  name: title,
+  description: summary,
+  url: localizedPath(lang, `/${collection}/${entrySlug(entry)}`),
+  point: attractionPoints[entrySlug(entry)],
+};
 ---
 
-<BaseLayout title={title} description={summary} lang={lang} available={available} share={photo}>
+<BaseLayout title={title} description={summary} lang={lang} available={available} share={photo} place={place}>
   <article class="item">
     <div class="item-photo">
       <Photo id={photo} lang={lang} widths={[640, 1024, 1440]} sizes="(min-width: 72rem) 70rem, 100vw" eager />

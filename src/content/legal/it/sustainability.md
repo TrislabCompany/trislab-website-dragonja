@@ -1,23 +1,22 @@
 ---
-title: Trajnostni razvoj
-description: Ogljični odtis te strani in kaj se naredi, da je čim manjši.
+title: Sostenibilità
+description: L'impronta di carbonio di questo sito e cosa si fa per mantenerla bassa.
 ---
 
-**Vzorčno besedilo.** To datoteko zamenjajte z lastno stranjo o trajnostnem razvoju ali stran izklopite z `legalPages.sustainability` v `src/site.config.ts`. `pnpm test` preveri, ali se številki spodaj ujemata z gradnjo, zato ohranite obliko: število in »KB«, število in »g CO₂e«.
+## L'impronta di carbonio di questo sito
 
-## Ogljični odtis te spletne strani
-
-| Kazalnik | Vrednost |
+| Indicatore | Valore |
 | --- | --- |
-| Povprečna velikost strani | približno 320 KB |
-| Izpusti na ogled strani | približno 0,05 g CO₂e |
-| JavaScript | brez |
-| Piškotki, sledilniki, skripte tretjih oseb | brez |
+| Peso medio di una pagina | circa 360 KB |
+| Emissioni per visualizzazione | circa 0,055 g CO₂e |
+| JavaScript | nessuno |
+| Cookie, tracciatori, script di terze parti | nessuno |
 
-Vrednost je izračunana z modelom Sustainable Web Design, različica 4, z odprtokodno knjižnico CO2.js fundacije Green Web Foundation. Zajema podatkovni center, omrežje in napravo obiskovalca.
+Il valore è calcolato con il modello Sustainable Web Design, versione 4, tramite la libreria open source CO2.js della Green Web Foundation. Comprende il data center, la rete e il dispositivo del visitatore.
 
-## Kako ostaja odtis majhen
+## Come si mantiene bassa l'impronta
 
-- **Statične strani.** Vsaka stran je pripravljena vnaprej in postrežena kot končna datoteka.
-- **Brez sledenja.** Brez piškotkov, analitike in vsebine tretjih oseb.
-- **Proračun velikosti.** Vsaka sprememba strani se samodejno preveri in je zavrnjena, če stran preseže proračun.
+- **Pagine statiche.** Ogni pagina è preparata in anticipo e servita come file finito.
+- **Foto leggere.** Le foto sono in formato AVIF, in alcune dimensioni, e si caricano solo quando ci si arriva scorrendo.
+- **Nessun tracciamento.** Niente cookie, analisi o contenuti di terze parti.
+- **Un limite di peso.** Ogni modifica del sito è verificata automaticamente e respinta se una pagina supera il limite.

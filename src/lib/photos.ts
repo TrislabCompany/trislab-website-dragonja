@@ -4,6 +4,13 @@
 // sources and licences is also in docs/image-credits.md.
 import type { ImageMetadata } from "astro";
 import type { Lang } from "../i18n";
+import borst from "../assets/photos/borst.jpg";
+import labor from "../assets/photos/labor.jpg";
+import mazurinMill from "../assets/photos/mazurin-mill.jpg";
+import riverMouth from "../assets/photos/river-mouth.jpg";
+import skrline from "../assets/photos/skrline.jpg";
+import truske from "../assets/photos/truske.jpg";
+import valleyEdge from "../assets/photos/valley-edge.jpg";
 import borderView from "../assets/photos/border-view.jpg";
 import novaVas from "../assets/photos/nova-vas.jpg";
 import padna from "../assets/photos/padna.jpg";
@@ -37,6 +44,8 @@ const commons = (file: string) => `https://commons.wikimedia.org/wiki/File:${fil
 const ccBySa4 = { licence: "CC BY-SA 4.0", licenceUrl: "https://creativecommons.org/licenses/by-sa/4.0/" };
 const ccBy4 = { licence: "CC BY 4.0", licenceUrl: "https://creativecommons.org/licenses/by/4.0/" };
 const cc0 = { licence: "CC0", licenceUrl: "https://creativecommons.org/publicdomain/zero/1.0/" };
+const gfdl = { licence: "GFDL 1.2", licenceUrl: "https://www.gnu.org/licenses/old-licenses/fdl-1.2.html" };
+const ccBy3 = { licence: "CC BY 3.0", licenceUrl: "https://creativecommons.org/licenses/by/3.0/" };
 const own = { author: "dragonja.si", licence: "©", source: "https://dragonja.si" };
 
 export const photos = {
@@ -163,6 +172,83 @@ export const photos = {
       de: "Das Dorf Sveti Peter auf seinem Hügel, umgeben von Olivenhainen.",
     },
     credit: { author: "Doremo", ...ccBySa4, source: commons("Sveti_Peter_Piran_Slovenia_1.jpg") },
+  },
+  "skrline": {
+    src: skrline,
+    alt: {
+      sl: "Voda se preliva čez kamnite skrli v strugi Dragonje v Škrlinah, v ozadju star kamnit most.",
+      en: "Water spilling over stone slabs in the bed of the Dragonja at Škrline, with the old stone bridge behind.",
+      hr: "Voda se prelijeva preko kamenih ploča u koritu Dragonje u Škrlinama, u pozadini stari kameni most.",
+      it: "L'acqua scorre sulle lastre di pietra nel letto della Dragogna a Škrline, con il vecchio ponte di pietra sullo sfondo.",
+      de: "Wasser fließt über Steinplatten im Bett der Dragonja bei Škrline, dahinter die alte Steinbrücke.",
+    },
+    credit: { author: "Ljuba brank", ...gfdl, source: commons("Dragonja-3.jpg") },
+  },
+  "mazurin-mill": {
+    src: mazurinMill,
+    alt: {
+      sl: "Kamnit Mazurinov mlin z bršljanom na pročelju in lesenim mlinskim kolesom ob strani.",
+      en: "The stone Mazurin mill, ivy on its front and a wooden water wheel at its side.",
+      hr: "Kameni mlin Mazurin s bršljanom na pročelju i drvenim mlinskim kolom sa strane.",
+      it: "Il mulino Mazurin in pietra, con l'edera sulla facciata e una ruota idraulica di legno sul fianco.",
+      de: "Die steinerne Mazurin-Mühle mit Efeu an der Fassade und einem hölzernen Wasserrad an der Seite.",
+    },
+    credit: { author: "Živa Rant", ...ccBySa4, source: commons("Mazurinov_mlin_Trsek.jpg") },
+  },
+  "borst": {
+    src: borst,
+    alt: {
+      sl: "Boršt na vrhu griča nad gozdnatimi pobočji, v ozadju hribi.",
+      en: "Boršt on the top of its hill above wooded slopes, with hills behind.",
+      hr: "Boršt na vrhu brežuljka iznad šumovitih padina, u pozadini brda.",
+      it: "Boršt in cima alla sua collina sopra pendii boscosi, con le colline sullo sfondo.",
+      de: "Boršt auf seinem Hügel über bewaldeten Hängen, dahinter Berge.",
+    },
+    credit: { author: "Doremo", ...ccBySa4, source: commons("Borst_Koper_Slovenia.jpg") },
+  },
+  "truske": {
+    src: truske,
+    alt: {
+      sl: "Vinogradi na Rodici pri Truškah, za njimi gozdnata pobočja doline.",
+      en: "Vineyards at Rodica near Truške, with the wooded slopes of the valley behind.",
+      hr: "Vinogradi na Rodici kod Truški, iza njih šumovite padine doline.",
+      it: "Vigneti a Rodica presso Truške, con i pendii boscosi della valle alle spalle.",
+      de: "Weinberge bei Rodica nahe Truške, dahinter die bewaldeten Hänge des Tals.",
+    },
+    credit: { author: "emax", ...ccBy3, source: commons("Vineyards_Rodica_Truske_-_panoramio.jpg") },
+  },
+  "labor": {
+    src: labor,
+    alt: {
+      sl: "Vas Labor na slemenu, s cipresami in oljkami pod hišami.",
+      en: "The village of Labor on its ridge, with cypresses and olive trees below the houses.",
+      hr: "Selo Labor na hrptu, s čempresima i maslinama ispod kuća.",
+      it: "Il villaggio di Labor sul suo crinale, con cipressi e ulivi sotto le case.",
+      de: "Das Dorf Labor auf seinem Bergrücken, mit Zypressen und Olivenbäumen unter den Häusern.",
+    },
+    credit: { author: "Doremo", ...ccBySa4, source: commons("Labor_Koper_Slovenia_2.jpg") },
+  },
+  "valley-edge": {
+    src: valleyEdge,
+    alt: {
+      sl: "Pogled čez dolino Dragonje: vinogradi in gozdovi na pobočjih.",
+      en: "A view across the Dragonja valley: vineyards and woods on its slopes.",
+      hr: "Pogled preko doline Dragonje: vinogradi i šume na padinama.",
+      it: "Una vista sulla valle della Dragogna: vigneti e boschi sui pendii.",
+      de: "Blick über das Dragonja-Tal: Weinberge und Wälder an den Hängen.",
+    },
+    credit: { author: "Žiga", licence: "Public domain", source: commons("DolinaDragonje2.JPG") },
+  },
+  "river-mouth": {
+    src: riverMouth,
+    alt: {
+      sl: "Izliv Dragonje: široka struga med kamnitimi bregovi, po njej veslajo čolni.",
+      en: "The mouth of the Dragonja: a wide channel between stone banks, with boats rowing on it.",
+      hr: "Ušće Dragonje: široko korito između kamenih obala, po njemu veslaju čamci.",
+      it: "La foce della Dragogna: un ampio canale tra sponde di pietra, con barche a remi.",
+      de: "Die Mündung der Dragonja: ein breiter Lauf zwischen Steinufern, auf dem Boote rudern.",
+    },
+    credit: { author: "Žiga", licence: "Public domain", source: commons("DragonjaIzliv.JPG") },
   },
 } satisfies Record<string, Photo>;
 

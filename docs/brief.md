@@ -34,9 +34,15 @@ The template is only the frame (build, checks, languages, legal pages, hosting).
   6. how to get here: by car, by bike on the Parenzana, on foot, in a dark band;
   7. the photo credits and the footer.
 - **Other pages:**
-  - the attractions page groups the attractions by kind;
-  - each attraction page opens with its photo, then where it is, the text and its sources.
-- **Navigation:** on a phone the links fold into a menu that opens without JavaScript.
+  - the attractions page groups the attractions by kind, with jump links to each kind;
+  - each attraction page opens with its photo, then where it is, the text and its sources;
+  - About opens with a smaller photo head, then one chapter per theme (the river, the mills, the hamlets, the border), each a photo beside its text and sources, alternating sides;
+  - Visit us opens the same way, then how to get here (a dark band), good to know (parking, the border, the salt pans, summer), when to come, the map with numbered attractions and a list of them, the gallery and the contact.
+- **Navigation:** Attractions, About, Visit us. On a phone the links fold into a menu that opens without JavaScript. Contact is in the footer.
+- **Design rules,** checked by `pnpm test` where a machine can:
+  - a photo shows at most once on a page, and every photo on a page has its credit there;
+  - every fact cites its source; when two sources disagree, the detail is left out;
+  - no placeholder text reaches any page, in any language, the legal pages included.
 
 ## Pages or modules
 
@@ -102,7 +108,7 @@ The template's whole baseline, no exceptions: `responsive-layout` (mobile first,
 ## Acceptance criteria
 
 - Every page and every attraction exists in all five languages, with `hreflang`, a canonical address and a sitemap entry.
-- `ci` is green: the build, the page-weight budget, the browser check (no sideways scrolling at 320px, axe-core), the claims check and the `security.txt` check.
+- `ci` is green: the build, the page-weight budget, the browser check (no sideways scrolling at 320px, axe-core), the claims check, the design check (no photo twice on a page, every photo credited, no placeholder text) and the `security.txt` check.
 - The site sets no cookies and loads nothing from another origin, the map included.
 - `/about`, `/attractions` and `/visit-us` and www.dragonja.si redirect permanently to the new pages.
 - Google's Rich Results Test reads the structured data of a page and of an attraction.
