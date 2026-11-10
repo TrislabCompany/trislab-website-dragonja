@@ -1,5 +1,5 @@
 {
-  "name": "tl-template-website",
+  "name": "trislab-website-dragonja",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -18,8 +18,7 @@
     "test:unit": "node --test \"scripts/*.test.mjs\"",
     "test:a11y": "node scripts/quality.mjs a11y",
     "co2": "node scripts/co2-estimate.mjs",
-    "status": "node scripts/status.mjs",
-    "init-site": "node scripts/init-site.mjs"
+    "status": "node scripts/status.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.4",

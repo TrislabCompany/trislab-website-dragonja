@@ -1,4 +1,4 @@
 * @TrislabCompany/trislab-dragonja
 /.github/ @TrislabCompany/trislab-dragonja @TrislabCompany/devops
-/platform.yaml @TrislabCompany/trislab-dragonja @TrislabCompany/devops
-/.trivyignore @TrislabCompany/trislab-dragonja @TrislabCompany/devops
+/public/_headers @TrislabCompany/trislab-dragonja @TrislabCompany/devops
+/scripts/write-config.mjs @TrislabCompany/trislab-dragonja @TrislabCompany/devops
