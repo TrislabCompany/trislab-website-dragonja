@@ -9,6 +9,12 @@ interface Props {
 }
 
 const { lang } = Astro.props;
+const pages = [
+  ...site.collections.filter((collection) => collection.nav).map((collection) => ({ href: `/${collection.id}`, label: collection.title[lang] })),
+  { href: "/about", label: t(lang, "nav.about") },
+  { href: "/visit-us", label: t(lang, "nav.visit") },
+  { href: "/contact", label: t(lang, "nav.contact") },
+];
 const legal = [
   { on: site.legalPages.imprint, href: "/imprint", label: t(lang, "legal.imprint") },
   { on: site.legalPages.privacy, href: "/privacy", label: t(lang, "legal.privacy") },
@@ -20,18 +26,20 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
-  <div class="wrap footer-row">
+  <div class="wrap footer-grid">
     <div class="footer-about">
       <a class="brand" href={localizedPath(lang)}>
-        <Logo size={28} />
+        <Logo size={44} place="footer" />
         <span>{site.name}</span>
       </a>
       <p>{site.description[lang]}</p>
-      <p>{t(lang, "footer.noCookies")}</p>
     </div>
+    <nav class="footer-links" aria-label={t(lang, "nav.footer")}>
+      {pages.map(({ href, label }) => <a href={localizedPath(lang, href)}>{label}</a>)}
+    </nav>
     {
       legal.length > 0 && (
-        <nav class="legal-links" aria-label={t(lang, "legal.nav")}>
+        <nav class="footer-links" aria-label={t(lang, "legal.nav")}>
           {legal.map(({ href, label }) => (
             <a href={localizedPath(lang, href)}>{label}</a>
           ))}
@@ -39,8 +47,8 @@ const year = new Date().getFullYear();
       )
     }
   </div>
-  <div class="wrap footer-row footer-bottom">
-    <span>© {year} {site.company.legalName}. {t(lang, "footer.rights")}</span>
+  <div class="wrap footer-bottom">
+    <span>© {year} {site.company.legalName}. {t(lang, "footer.noCookies")}</span>
     <EnvironmentBadge />
   </div>
 </footer>

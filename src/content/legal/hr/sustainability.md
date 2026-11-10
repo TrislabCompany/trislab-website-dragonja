@@ -1,23 +1,22 @@
 ---
-title: Trajnostni razvoj
-description: Ogljični odtis te strani in kaj se naredi, da je čim manjši.
+title: Održivost
+description: Ugljični otisak ove stranice i što se čini da bude što manji.
 ---
 
-**Vzorčno besedilo.** To datoteko zamenjajte z lastno stranjo o trajnostnem razvoju ali stran izklopite z `legalPages.sustainability` v `src/site.config.ts`. `pnpm test` preveri, ali se številki spodaj ujemata z gradnjo, zato ohranite obliko: število in »KB«, število in »g CO₂e«.
+## Ugljični otisak ove mrežne stranice
 
-## Ogljični odtis te spletne strani
-
-| Kazalnik | Vrednost |
+| Pokazatelj | Vrijednost |
 | --- | --- |
-| Povprečna velikost strani | približno 135 KB |
-| Izpusti na ogled strani | približno 0,02 g CO₂e |
-| JavaScript | brez |
-| Piškotki, sledilniki, skripte tretjih oseb | brez |
+| Prosječna veličina stranice | oko 360 KB |
+| Emisije po pregledu stranice | oko 0,055 g CO₂e |
+| JavaScript | nema |
+| Kolačići, alati za praćenje, skripte trećih strana | nema |
 
-Vrednost je izračunana z modelom Sustainable Web Design, različica 4, z odprtokodno knjižnico CO2.js fundacije Green Web Foundation. Zajema podatkovni center, omrežje in napravo obiskovalca.
+Vrijednost je izračunana modelom Sustainable Web Design, verzija 4, s pomoću otvorene knjižnice CO2.js zaklade Green Web Foundation. Obuhvaća podatkovni centar, mrežu i uređaj posjetitelja.
 
-## Kako ostaja odtis majhen
+## Kako otisak ostaje malen
 
-- **Statične strani.** Vsaka stran je pripravljena vnaprej in postrežena kot končna datoteka.
-- **Brez sledenja.** Brez piškotkov, analitike in vsebine tretjih oseb.
-- **Proračun velikosti.** Vsaka sprememba strani se samodejno preveri in je zavrnjena, če stran preseže proračun.
+- **Statične stranice.** Svaka stranica pripremljena je unaprijed i poslužuje se kao gotova datoteka.
+- **Lagane fotografije.** Fotografije su u formatu AVIF, u nekoliko veličina, i učitavaju se tek kad se do njih pomaknete.
+- **Bez praćenja.** Bez kolačića, analitike i sadržaja trećih strana.
+- **Proračun veličine.** Svaka promjena stranice automatski se provjerava i odbija ako stranica premaši proračun.

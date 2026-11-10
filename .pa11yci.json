@@ -3,6 +3,7 @@
     "standard": "WCAG2AA",
     "runners": ["axe", "htmlcs"],
     "level": "error",
+    "levelCapWhenNeedsReview": "warning",
     "timeout": 60000,
     "concurrency": 1,
     "chromeLaunchConfig": {

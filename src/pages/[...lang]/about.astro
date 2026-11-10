@@ -1,19 +1,59 @@
 ---
-import ContactCta from "../../components/ContactCta.astro";
-import { languagePaths, t, type Lang } from "../../i18n";
+// About the valley: the river, the mills, the hamlets and the border, each
+// with a photo and its sources. Texts in src/texts/pages.ts.
+import PageHero from "../../components/PageHero.astro";
+import Photo from "../../components/Photo.astro";
+import PhotoCredits from "../../components/PhotoCredits.astro";
+import { languagePaths, localizedPath, type Lang } from "../../i18n";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import site from "../../site.config";
+import { home, sources } from "../../texts/home";
+import { about, visit } from "../../texts/pages";
 
 export const getStaticPaths = languagePaths;
 
 const { lang } = Astro.props as { lang: Lang };
+const text = about[lang];
+const hero = "valley-view";
+const shown = [hero, ...text.sections.map((section) => section.photo)];
+const attractions = site.collections.find((collection) => collection.id === "attractions");
 ---
 
-<BaseLayout title={t(lang, "nav.about")} lang={lang}>
-  <div class="prose">
-    <h1>{t(lang, "nav.about")}</h1>
-    <p class="lead">{site.description[lang]}</p>
-    {/* Sample page: replace the text above with the site's own, in every language, or move it to Markdown in src/content/. */}
+<BaseLayout title={text.title} description={text.lead} lang={lang} wide share={hero}>
+  <PageHero photo={hero} lang={lang} title={text.title} lead={text.lead} eyebrow={home[lang].hero.eyebrow} />
+
+  {
+    text.sections.map((section, index) => (
+      <section id={section.id} class:list={["band", "chapter", { alt: index % 2 === 1 }]} aria-labelledby={`${section.id}-title`}>
+        <div class="wrap chapter-grid">
+          <div class="chapter-photo">
+            <Photo id={section.photo} lang={lang} widths={[560, 720]} sizes="(min-width: 76rem) 34rem, (min-width: 60rem) 45vw, 92vw" />
+          </div>
+          <div class="chapter-text">
+            <p class="eyebrow">{String(index + 1).padStart(2, "0")}</p>
+            <h2 id={`${section.id}-title`}>{section.title}</h2>
+            {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+            <p class="source">
+              {text.sourcesLabel}:{" "}
+              {section.sources.map((id, i) => (
+                <>
+                  {i > 0 && ", "}
+                  <a href={sources[id].url}>{sources[id].title}</a>
+                </>
+              ))}
+            </p>
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <div class="band next">
+    <div class="wrap actions">
+      {attractions && <a class="button" href={localizedPath(lang, "/attractions")}>{attractions.title[lang]} →</a>}
+      <a class="button secondary" href={localizedPath(lang, "/visit-us")}>{visit[lang].title} →</a>
+    </div>
   </div>
-  <ContactCta lang={lang} />
+
+  <PhotoCredits ids={shown} lang={lang} />
 </BaseLayout>

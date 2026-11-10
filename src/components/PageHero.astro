@@ -1,0 +1,27 @@
+---
+// The head of a page in the site's own look: a photo across the full width,
+// the title and one sentence on it. Smaller than the home page's hero. The
+// page sets `wide` on BaseLayout so the header lies over the photo.
+import type { Lang } from "../i18n";
+import Photo from "./Photo.astro";
+
+interface Props {
+  photo: string;
+  lang: Lang;
+  title: string;
+  lead: string;
+  eyebrow?: string;
+}
+
+const { photo, lang, title, lead, eyebrow } = Astro.props;
+---
+
+<section class="hero compact" aria-labelledby="page-title">
+  <Photo id={photo} lang={lang} widths={[640, 768, 1024, 1600]} sizes="100vw" eager class="hero-photo" />
+  <div class="hero-shade"></div>
+  <div class="wrap hero-content">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h1 id="page-title">{title}</h1>
+    <p class="hero-lead">{lead}</p>
+  </div>
+</section>

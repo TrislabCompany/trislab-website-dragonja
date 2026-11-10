@@ -1,4 +1,8 @@
 ---
+// The site header. On the home page it lies over the hero photo (`overlay`).
+// On a phone the links fold into a menu built on <details>: it opens without
+// JavaScript. The wide navigation and the menu hold the same links; CSS shows
+// one of them.
 import { localizedPath, t, type Lang } from "../i18n";
 import site from "../site.config";
 import LanguageSwitch from "./LanguageSwitch.astro";
@@ -8,20 +12,21 @@ interface Props {
   lang: Lang;
   path: string;
   available?: readonly Lang[];
+  overlay?: boolean;
 }
 
-const { lang, path, available } = Astro.props;
+const { lang, path, available, overlay = false } = Astro.props;
 // The lists of items marked nav in src/site.config.ts, then the fixed pages.
 const links = [
   ...site.collections.filter((collection) => collection.nav).map((collection) => ({ href: `/${collection.id}`, label: collection.title[lang] })),
   { href: "/about", label: t(lang, "nav.about") },
-  { href: "/contact", label: t(lang, "nav.contact") },
+  { href: "/visit-us", label: t(lang, "nav.visit") },
 ];
-// A section's link stays marked on its detail pages (/services/first-service).
+// A section's link stays marked on its detail pages (/attractions/padna).
 const current = (href: string) => path === href || path.startsWith(`${href}/`);
 ---
 
-<header class="site-header">
+<header class:list={["site-header", { overlay }]}>
   <div class="wrap header-row">
     <a class="brand" href={localizedPath(lang)}>
       <Logo />
@@ -37,5 +42,21 @@ const current = (href: string) => path === href || path.startsWith(`${href}/`);
       }
     </nav>
     <LanguageSwitch lang={lang} path={path} available={available} />
+    <details class="menu">
+      <summary>
+        <span class="menu-icon" aria-hidden="true"></span>
+        {t(lang, "nav.menu")}
+      </summary>
+      <nav class="menu-panel" aria-label={t(lang, "nav.main")}>
+        {
+          links.map(({ href, label }) => (
+            <a href={localizedPath(lang, href)} aria-current={current(href) ? "page" : undefined}>
+              {label}
+            </a>
+          ))
+        }
+        <LanguageSwitch lang={lang} path={path} available={available} />
+      </nav>
+    </details>
   </div>
 </header>

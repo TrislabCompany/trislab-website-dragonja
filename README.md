@@ -8,6 +8,31 @@ An [Astro](https://astro.build) site built into static files, served by Cloudfla
 
 **Languages:** Slovenian, English, Croatian, Italian, German. The first is the default; each language lives under its own URL.
 
+## Design
+
+The site's own design, not the template's: a calm, image-led destination site for the valley. The design direction is in [docs/brief.md](docs/brief.md#design-direction). In short:
+
+- **Colours** from the logo: river blue, hill green and earth brown on the warm white of Istrian stone (`src/styles/tokens.css`).
+- **Type:** Fraunces for headings, Inter for text, both self-hosted.
+- **Photos** are registered in `src/lib/photos.ts` with their alternative text in every language and their credit; pages refer to a photo by its id, and every page lists the credits of the photos it shows. Sources and licences: [docs/image-credits.md](docs/image-credits.md).
+- **Pages** (`src/pages/[...lang]/`):
+  - **Home** (`index.astro`, texts in `src/texts/home.ts`): the hero photo, three ways in, the story of the valley, featured attractions, when to come, how to get here.
+  - **Attractions** (`[collection]/`, one Markdown file per attraction and language in `src/content/attractions/`): 22 attractions grouped by kind, each with its photo (or, without a free photo, the map around it, `src/components/MiniMap.astro`), where it is, its text and its sources.
+  - **About** (`about.astro`) and **Visit us** (`visit-us.astro`), texts in `src/texts/pages.ts`. Visit us has the ways to get here, good to know, the seasons, the map and the gallery.
+- **Map:** OpenStreetMap data drawn as inline SVG (`src/components/ValleyMap.astro`), so no visitor's browser asks another server. `scripts/make-map.mjs` makes `src/assets/map/valley.json` from the Overpass API; run it by hand when the map should change. The points of the attractions are in `src/lib/places.ts`; markers closer than their width are spread apart, with a line back to their place, and keep off the village names (`src/lib/spread.mjs`).
+- **Structured data:** the valley as a `TouristDestination` on the home page, each attraction as a `TouristAttraction` with its point (`src/components/PlaceData.astro`).
+- **Old addresses:** `/about`, `/attractions` and `/visit-us` of the earlier site redirect to the Slovenian pages (`public/_redirects`); `www.dragonja.si` is redirected by Cloudflare.
+
+**Design rules the build checks:**
+
+- **A photo shows at most once on a page, and every photo on a page has its credit there** (`scripts/check-design.mjs`, run by `pnpm test`). Choose another photo from `src/lib/photos.ts` rather than repeating one; the home page skips a featured attraction whose photo is already on the page.
+- **Every fact cites a source** next to it; a fact that can't be checked against a source is left out. Advice (where to park) has no source.
+- **No placeholder text** reaches a page: no "sample text", no lorem ipsum, no "TBD".
+
+**Page weight:** the limit is 750 KB per page instead of the template's 500 KB (`page-weight.config.json`). The home page is led by photos: it shows eleven, and every one except the hero loads only when it scrolls into view, so the first screen weighs far less than the total. About and Visit us (a gallery of eight) are the next heaviest; the attraction pages stay well under 500 KB.
+
+**Largest Contentful Paint:** the Lighthouse limit is 3.0 s instead of the template's 2.5 s (`lighthouserc.json`). On About and Attractions the largest element is a photo, and on Lighthouse's simulated slow 4G phone it arrives after the two fonts with the Slovenian letters (č, š, ž), about 300 KB together, at about 2.9 s. The photos are already AVIF at the smallest width that stays sharp, and the first one loads first; the next step, if real visitors measure slower, would be a smaller font subset. Every other Lighthouse limit stays at the template's value.
+
 ## Environments
 
 | Environment | Address | Shows | Who can open it |
@@ -20,9 +45,9 @@ How a change moves between them is in [docs/deployment.md](docs/deployment.md). 
 
 ## Before production
 
-- Replace the sample texts: the legal pages in `src/content/legal/<language>/` need a lawyer's review, and the about page and the other pages need the site's own texts in every language.
-- Have a native speaker review every language that is not the source of the texts.
-- Replace the logo (`src/components/Logo.astro`, `public/favicon.svg`) and check the brand colours in `src/styles/tokens.css`.
+- Have a lawyer review the privacy policy and the accessibility statement (`src/content/legal/<language>/`).
+- Have a native speaker review the Croatian, Italian and German texts (the pages, `src/texts/`, `src/content/`, `src/lib/photos.ts`).
+- Check the two photos taken over from the earlier site (`valley-cascade`, `stone-house` in `src/lib/photos.ts`): where they were taken and who may publish them.
 - Check the facts in `src/site.config.ts` against the company's published data.
 
 ## Work on it

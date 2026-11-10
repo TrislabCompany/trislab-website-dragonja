@@ -1,0 +1,7 @@
+# The addresses of the earlier dragonja.si (an Angular app with one address
+# per page and no language in it) lead permanently to the same page in
+# Slovenian, the default language. "/" is added by astro.config.mjs.
+# www.dragonja.si → dragonja.si is a Cloudflare rule, not a line here.
+/about /sl/about 301
+/attractions /sl/attractions 301
+/visit-us /sl/visit-us 301

@@ -1,23 +1,22 @@
 ---
-title: Trajnostni razvoj
-description: Ogljični odtis te strani in kaj se naredi, da je čim manjši.
+title: Nachhaltigkeit
+description: Der CO₂-Fußabdruck dieser Website und was getan wird, um ihn klein zu halten.
 ---
 
-**Vzorčno besedilo.** To datoteko zamenjajte z lastno stranjo o trajnostnem razvoju ali stran izklopite z `legalPages.sustainability` v `src/site.config.ts`. `pnpm test` preveri, ali se številki spodaj ujemata z gradnjo, zato ohranite obliko: število in »KB«, število in »g CO₂e«.
+## Der CO₂-Fußabdruck dieser Website
 
-## Ogljični odtis te spletne strani
-
-| Kazalnik | Vrednost |
+| Kennzahl | Wert |
 | --- | --- |
-| Povprečna velikost strani | približno 135 KB |
-| Izpusti na ogled strani | približno 0,02 g CO₂e |
-| JavaScript | brez |
-| Piškotki, sledilniki, skripte tretjih oseb | brez |
+| Durchschnittliche Seitengröße | etwa 360 KB |
+| Emissionen pro Seitenaufruf | etwa 0,055 g CO₂e |
+| JavaScript | keins |
+| Cookies, Tracker, Skripte von Dritten | keine |
 
-Vrednost je izračunana z modelom Sustainable Web Design, različica 4, z odprtokodno knjižnico CO2.js fundacije Green Web Foundation. Zajema podatkovni center, omrežje in napravo obiskovalca.
+Der Wert ist mit dem Modell Sustainable Web Design, Version 4, und der Open-Source-Bibliothek CO2.js der Green Web Foundation berechnet. Er umfasst das Rechenzentrum, das Netz und das Gerät der Besucher.
 
-## Kako ostaja odtis majhen
+## Wie der Fußabdruck klein bleibt
 
-- **Statične strani.** Vsaka stran je pripravljena vnaprej in postrežena kot končna datoteka.
-- **Brez sledenja.** Brez piškotkov, analitike in vsebine tretjih oseb.
-- **Proračun velikosti.** Vsaka sprememba strani se samodejno preveri in je zavrnjena, če stran preseže proračun.
+- **Statische Seiten.** Jede Seite wird im Voraus erstellt und als fertige Datei ausgeliefert.
+- **Leichte Fotos.** Die Fotos sind im Format AVIF, in wenigen Größen, und laden erst, wenn man zu ihnen scrollt.
+- **Kein Tracking.** Keine Cookies, keine Analyse und keine Inhalte von Dritten.
+- **Ein Gewichtsbudget.** Jede Änderung der Website wird automatisch geprüft und abgelehnt, wenn eine Seite ihr Budget überschreitet.

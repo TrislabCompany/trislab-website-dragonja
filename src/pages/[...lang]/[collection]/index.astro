@@ -1,7 +1,7 @@
 ---
-import ContactCta from "../../../components/ContactCta.astro";
 import ItemCard from "../../../components/ItemCard.astro";
-import { type Lang } from "../../../i18n";
+import PhotoCredits from "../../../components/PhotoCredits.astro";
+import { t, type Lang } from "../../../i18n";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { collectionPaths, collectionSettings, sortedItems, type ItemCollection } from "../../../lib/items";
 
@@ -10,13 +10,34 @@ export const getStaticPaths = collectionPaths;
 const { lang, collection } = Astro.props as { lang: Lang; collection: ItemCollection };
 const settings = collectionSettings(collection);
 const items = await sortedItems(collection, lang);
+// One group per kind, in this order; the home page links to each by its id.
+const kinds = ["nature", "culture", "activity", "place"] as const;
+const groups = kinds.map((kind) => ({ kind, items: items.filter((entry) => entry.data.kind === kind) })).filter((group) => group.items.length > 0);
 ---
 
 <BaseLayout title={settings.title[lang]} description={settings.lead[lang]} lang={lang}>
-  <h1>{settings.title[lang]}</h1>
-  <p class="lead">{settings.lead[lang]}</p>
-  <ul class="grid">
-    {items.map((entry) => <ItemCard entry={entry} collection={collection} lang={lang} level={2} />)}
-  </ul>
-  <ContactCta lang={lang} />
+  <div class="page-head">
+    <h1>{settings.title[lang]}</h1>
+    <p class="lead">{settings.lead[lang]}</p>
+    <nav class="kind-nav" aria-label={t(lang, "nav.onPage")}>
+      {groups.map((group) => <a href={`#${group.kind}`}>{t(lang, `kind.${group.kind}`)}</a>)}
+    </nav>
+  </div>
+  {
+    groups.map((group, g) => (
+      <section class="group" id={group.kind} aria-labelledby={`${group.kind}-title`}>
+        <h2 id={`${group.kind}-title`}>{t(lang, `kind.${group.kind}`)}</h2>
+        <ul class="cards">
+          {group.items.map((entry, i) => (
+            <ItemCard entry={entry} collection={collection} lang={lang} eager={g === 0 && i === 0} />
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+  <PhotoCredits
+    ids={items.flatMap((entry) => (entry.data.photo ? [entry.data.photo] : []))}
+    map={items.some((entry) => !entry.data.photo)}
+    lang={lang}
+  />
 </BaseLayout>

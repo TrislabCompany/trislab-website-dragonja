@@ -1,0 +1,125 @@
+---
+// The valley map on Visit us: OpenStreetMap data drawn as inline SVG
+// (src/assets/map/valley.json, made by scripts/make-map.mjs), so no tiles
+// and no request to another server. Numbered points lead to the attractions;
+// the list under the map holds the same links for screen readers and
+// keyboards. On a phone the map keeps a readable size and scrolls sideways
+// inside its frame; the page itself never does.
+import map from "../assets/map/valley.json";
+import type { Lang } from "../i18n";
+import { villages, type Point } from "../lib/places";
+import { at } from "../lib/map";
+import { spread } from "../lib/spread.mjs";
+
+interface Marker {
+  n: number;
+  title: string;
+  href: string;
+  point: Point;
+}
+
+interface Props {
+  lang: Lang;
+  markers: Marker[];
+  text: { label: string; scroll: string; legend: string; river: string; trail: string; border: string; roads: string; open: string };
+}
+
+const { markers, text } = Astro.props;
+// A marker is 60 px wide; points closer than that are spread apart.
+const RADIUS = 30;
+const points = markers.map((marker) => at(marker.point));
+// The villages' dots and names, which markers keep off: a name is about
+// 19 px a letter at 34 px, drawn above and beside its dot as below.
+const nameBox = (village: (typeof villages)[number]) => {
+  const { x, y } = at(village);
+  const w = village.name.length * 19 + 14;
+  const left = x > map.width - 240;
+  return { x: left ? x - w : x - 8, y: y - 40, width: w + 8, height: 48 };
+};
+const spots = spread(points, {
+  gap: RADIUS * 2 + 6,
+  width: map.width,
+  height: map.height,
+  margin: RADIUS + 4,
+  obstacles: villages.map(nameBox),
+});
+const moved = (i: number) => points[i]!.x !== spots[i]!.x || points[i]!.y !== spots[i]!.y;
+const centre = { lat: (map.box.north + map.box.south) / 2, lon: (map.box.east + map.box.west) / 2 };
+const osm = `https://www.openstreetmap.org/#map=12/${centre.lat.toFixed(4)}/${centre.lon.toFixed(4)}`;
+---
+
+<figure class="valley-map">
+  <div class="map-frame" tabindex="0" role="region" aria-label={text.scroll}>
+    <svg viewBox={`0 0 ${map.width} ${map.height}`} role="group" aria-label={text.label}>
+      <g aria-hidden="true">
+      <rect class="map-land" width={map.width} height={map.height}></rect>
+      <path class="map-coast" d={map.coast}></path>
+      <path class="map-roads" d={map.roads}></path>
+      <path class="map-main-roads" d={map.mainRoads}></path>
+      <path class="map-streams" d={map.streams}></path>
+      <path class="map-river" d={map.river}></path>
+      <path class="map-border" d={map.border}></path>
+      <path class="map-trail" d={map.trail}></path>
+      {
+        villages.map((village) => {
+          const { x, y } = at(village);
+          // A name near the right edge goes to the left of its point.
+          const left = x > map.width - 240;
+          return (
+            <g class="map-village">
+              <circle cx={x} cy={y} r="7" />
+              <text x={left ? x - 14 : x + 14} y={y - 10} text-anchor={left ? "end" : "start"}>
+                {village.name}
+              </text>
+            </g>
+          );
+        })
+      }
+      {
+        points.map((point, i) =>
+          moved(i) ? (
+            <g class="map-leader">
+              <line x1={point.x} y1={point.y} x2={spots[i]!.x} y2={spots[i]!.y} />
+              <circle cx={point.x} cy={point.y} r="7" />
+            </g>
+          ) : null,
+        )
+      }
+      </g>
+      {
+        markers.map((marker, i) => {
+          const { x, y } = spots[i]!;
+          return (
+            <a href={marker.href} class="map-marker" aria-label={`${marker.n}. ${marker.title}`}>
+              <circle cx={x} cy={y} r={RADIUS} />
+              <text x={x} y={y + 11} aria-hidden="true">
+                {marker.n}
+              </text>
+            </a>
+          );
+        })
+      }
+    </svg>
+  </div>
+  <figcaption>
+    <ul class="map-key">
+      <li><span class="key key-river" aria-hidden="true"></span>{text.river}</li>
+      <li><span class="key key-trail" aria-hidden="true"></span>{text.trail}</li>
+      <li><span class="key key-border" aria-hidden="true"></span>{text.border}</li>
+      <li><span class="key key-roads" aria-hidden="true"></span>{text.roads}</li>
+    </ul>
+    <h3 class="map-legend-title">{text.legend}</h3>
+    <ol class="map-legend">
+      {
+        markers.map((marker) => (
+          <li value={marker.n}>
+            <a href={marker.href}>{marker.title}</a>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="map-credit">
+      <a href={map.licence}>{map.attribution}</a> · <a href={osm}>{text.open}</a>
+    </p>
+  </figcaption>
+</figure>

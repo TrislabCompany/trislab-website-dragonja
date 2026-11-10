@@ -1,6 +1,11 @@
-/* The layout and components of the site. Colours, radius and font come from
-   tokens.css (the brand): this file uses their names and holds no colour of
-   its own. */
+/* The layout and components of dragonja.si. Colours, radius and fonts come
+   from tokens.css (the brand): this file uses their names and holds no
+   colour of its own, except white and black in shades over photos.
+
+   The design: a calm, image-led destination site. Large photos of the valley,
+   headings in Fraunces, text in Inter, the warm white of Istrian stone, and
+   the logo's river blue, hill green and earth brown as accents. Mobile first:
+   every rule works at 320px, wider screens add columns. */
 
 :root {
   color-scheme: light;
@@ -22,12 +27,19 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 a {
   color: var(--accent-text);
+  text-underline-offset: 0.2em;
 }
 
 a:focus-visible,
-.button:focus-visible {
+.button:focus-visible,
+summary:focus-visible {
   outline: 2px solid var(--accent-text);
   outline-offset: 3px;
 }
@@ -35,22 +47,34 @@ a:focus-visible,
 h1,
 h2,
 h3 {
-  line-height: 1.2;
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.15;
   letter-spacing: -0.01em;
+  /* Long words (Ausflugsziele, Znamenitosti) break instead of pushing the
+     page wider than a 320px screen. */
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 h1 {
-  font-size: clamp(2rem, 4vw + 1rem, 3.25rem);
+  font-size: clamp(2.25rem, 5vw + 1rem, 4rem);
   margin: 0 0 1rem;
 }
 
 h2 {
-  font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
+  font-size: clamp(1.75rem, 2.5vw + 1rem, 2.5rem);
+  margin: 0 0 0.75rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+  margin: 0 0 0.375rem;
 }
 
 .wrap {
   width: 100%;
-  max-width: 72rem;
+  max-width: 76rem;
   margin: 0 auto;
   padding: 0 1.25rem;
 }
@@ -58,45 +82,64 @@ h2 {
 main {
   flex: 1;
   width: 100%;
-  max-width: 72rem;
+  max-width: 76rem;
   margin: 0 auto;
   padding: 2.5rem 1.25rem 4rem;
 }
 
-/* Text pages (legal, imprint, detail pages) read better narrow. */
+/* The home page: full width, the sections bring their own .wrap. */
+.wide main {
+  max-width: none;
+  padding: 0;
+}
+
 .prose {
-  max-width: 46rem;
+  max-width: 44rem;
 }
 
 .lead {
   font-size: 1.125rem;
   color: var(--muted);
-  max-width: 46rem;
+  max-width: 44rem;
 }
 
 .eyebrow {
   margin: 0 0 0.75rem;
-  color: var(--accent-text);
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  color: var(--earth);
+  font-size: 0.8125rem;
+  font-weight: 650;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.eyebrow a {
+  color: inherit;
+}
+
+.source {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+
+.source a {
+  color: var(--muted);
 }
 
 /* Header */
 
 .site-header {
+  position: relative;
+  z-index: 10;
   border-bottom: 1px solid var(--border);
   background: var(--background);
 }
 
 .header-row {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 0.75rem 1.5rem;
-  padding-top: 0.875rem;
-  padding-bottom: 0.875rem;
+  gap: 1rem 1.75rem;
+  min-height: 4.5rem;
 }
 
 .brand {
@@ -104,47 +147,56 @@ main {
   align-items: center;
   gap: 0.625rem;
   color: var(--text);
-  font-size: 1.125rem;
-  font-weight: 650;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
   text-decoration: none;
 }
 
 .main-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem 1.25rem;
+  display: none;
+  gap: 1.75rem;
   margin-left: auto;
 }
 
-.main-nav a {
+.main-nav a,
+.menu-panel > a {
   color: var(--text);
+  font-weight: 550;
   text-decoration: none;
-  padding: 0.25rem 0;
+}
+
+.main-nav a {
+  padding: 0.375rem 0;
+  border-bottom: 2px solid transparent;
 }
 
 .main-nav a:hover,
 .main-nav a[aria-current="page"] {
-  color: var(--accent-text);
+  border-bottom-color: var(--hill);
 }
 
-.main-nav a[aria-current="page"] {
-  text-decoration: underline;
-  text-underline-offset: 0.35em;
+.header-row > .language-switch {
+  display: none;
 }
 
 .language-switch {
   display: flex;
-  gap: 0.5rem;
-  font-size: 0.875rem;
+  gap: 0.25rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
 }
 
-.language-switch a {
+.language-switch a,
+.language-switch [aria-current] {
   /* At least 24 × 24 px to tap (WCAG 2.2, 2.5.8 Target Size). */
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 24px;
-  min-height: 24px;
+  min-width: 2rem;
+  min-height: 2rem;
+  border-radius: 999px;
   color: var(--muted);
   text-decoration: none;
 }
@@ -154,64 +206,134 @@ main {
 }
 
 .language-switch [aria-current] {
+  background: var(--surface-strong);
   color: var(--text);
-  font-weight: 650;
 }
 
-@media (max-width: 52rem) {
-  .main-nav {
-    order: 3;
-    width: 100%;
-    margin-left: 0;
-  }
-
-  .language-switch {
-    margin-left: auto;
-  }
+/* The phone menu: a <details> that opens a panel under the header. */
+.menu {
+  margin-left: auto;
 }
 
-/* Footer */
-
-.site-footer {
-  border-top: 1px solid var(--border);
-  color: var(--muted);
-  font-size: 0.875rem;
+.menu summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
 }
 
-.footer-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 1rem 2rem;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+.menu summary::-webkit-details-marker {
+  display: none;
 }
 
-.footer-about {
-  max-width: 28rem;
+.menu-icon,
+.menu-icon::before,
+.menu-icon::after {
+  display: block;
+  width: 1.125rem;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
 }
 
-.footer-about p {
-  margin: 0.5rem 0 0;
+.menu-icon {
+  position: relative;
 }
 
-.legal-links {
+.menu-icon::before,
+.menu-icon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+
+.menu-icon::before {
+  top: -6px;
+}
+
+.menu-icon::after {
+  top: 6px;
+}
+
+.menu[open] .menu-icon {
+  background: transparent;
+}
+
+.menu[open] .menu-icon::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.menu[open] .menu-icon::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+.menu-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.25rem;
+  padding: 0.75rem 1.25rem 1.25rem;
+  background: var(--background);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1rem 2rem rgb(0 0 0 / 0.12);
 }
 
-.legal-links a {
-  color: var(--muted);
+.menu-panel > a {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 1.125rem;
 }
 
-.legal-links a:hover {
-  color: var(--text);
+.menu-panel .language-switch {
+  padding-top: 0.75rem;
 }
 
-.footer-bottom {
-  border-top: 1px solid var(--border);
-  padding-top: 1rem;
+@media (min-width: 56rem) {
+  .main-nav,
+  .header-row > .language-switch {
+    display: flex;
+  }
+
+  .menu {
+    display: none;
+  }
+}
+
+/* Over the hero photo: transparent, white text. */
+.site-header.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  border-bottom: 0;
+  background: linear-gradient(rgb(0 0 0 / 0.45), rgb(0 0 0 / 0));
+}
+
+.overlay .brand,
+.overlay .main-nav a,
+.overlay .header-row > .language-switch a,
+.overlay .menu summary {
+  color: #ffffff;
+}
+
+.overlay .menu summary {
+  border-color: rgb(255 255 255 / 0.6);
+}
+
+.overlay .header-row > .language-switch [aria-current] {
+  background: rgb(255 255 255 / 0.2);
+  color: #ffffff;
 }
 
 /* Buttons */
@@ -220,130 +342,599 @@ main {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-top: 1.75rem;
+  margin: 2rem 0 0;
 }
 
 .button {
-  display: inline-block;
-  padding: 0.7rem 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  min-height: 3rem;
+  padding: 0.75rem 1.5rem;
   border-radius: 999px;
-  border: 1px solid var(--accent);
+  border: 2px solid var(--accent);
   background: var(--accent);
   color: var(--accent-contrast);
-  font-weight: 600;
+  font-weight: 650;
   text-decoration: none;
 }
 
 .button:hover {
-  background: var(--accent-text);
+  background: var(--night);
+  border-color: var(--night);
 }
 
-.button.secondary {
+.button.ghost {
   background: transparent;
-  color: var(--text);
-  border-color: var(--border);
+  border-color: #ffffff;
+  color: #ffffff;
 }
 
-.button.secondary:hover {
-  border-color: var(--text);
+.button.ghost:hover {
+  background: rgb(255 255 255 / 0.15);
 }
 
-/* Sections and cards */
+/* Hero: the valley, full screen, the title at the bottom left. */
 
-.section {
-  margin-top: 4rem;
+/* Text on a photo also gets a dark background of its own: it shows while the
+   photo loads, and contrast checkers, which can't see the photo, measure the
+   text against it. */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: min(100svh, 56rem);
+  min-height: max(34rem, min(100svh, 56rem));
+  background-color: var(--night);
+  color: #ffffff;
+  isolation: isolate;
 }
 
-.section > h2 {
-  margin: 0 0 0.5rem;
+/* The crop of a photo (focus in src/lib/photos.ts). */
+img[data-focus="50% 60%"] {
+  object-position: 50% 60%;
 }
 
-.grid {
+img[data-focus="60% 50%"] {
+  object-position: 60% 50%;
+}
+
+img[data-focus="60% 60%"] {
+  object-position: 60% 60%;
+}
+
+.hero-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.hero-shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(to top, rgb(8 24 30 / 0.85) 0%, rgb(8 24 30 / 0.45) 45%, rgb(8 24 30 / 0) 75%),
+    linear-gradient(to right, rgb(8 24 30 / 0.35), rgb(8 24 30 / 0) 60%);
+}
+
+.hero-content {
+  padding-top: 7rem;
+  padding-bottom: clamp(3rem, 8vh, 6rem);
+}
+
+.hero .eyebrow {
+  color: #ffffff;
+  opacity: 0.9;
+}
+
+.hero h1 {
+  max-width: 14ch;
+  font-weight: 650;
+  text-shadow: 0 2px 24px rgb(0 0 0 / 0.35);
+}
+
+.hero-lead {
+  max-width: 36rem;
+  margin: 0;
+  font-size: clamp(1.125rem, 1vw + 0.9rem, 1.375rem);
+  text-shadow: 0 1px 12px rgb(0 0 0 / 0.4);
+}
+
+/* Bands: the sections of the home page. */
+
+.band {
+  padding: clamp(3.5rem, 8vw, 6.5rem) 0;
+}
+
+.band-head {
+  margin-bottom: 2rem;
+}
+
+.band-head h2 {
+  margin-bottom: 0.5rem;
+}
+
+.band-head .lead {
+  margin: 0;
+}
+
+.band-head.split {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+}
+
+.more-link {
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.more-link:hover {
+  text-decoration: underline;
+}
+
+/* Three ways in: tall photo cards with the text on the photo. */
+
+.ways {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
   gap: 1rem;
-  margin-top: 1.5rem;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.card {
+.way {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 22rem;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background-color: var(--night);
+  color: #ffffff;
+  text-decoration: none;
+  isolation: isolate;
+}
+
+.way img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  transition: transform 0.6s ease;
+}
+
+.way::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to top, rgb(8 24 30 / 0.88) 0%, rgb(8 24 30 / 0.35) 55%, rgb(8 24 30 / 0) 80%);
+}
+
+.way:hover img {
+  transform: scale(1.04);
+}
+
+.way-text {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  height: 100%;
+  gap: 0.375rem;
   padding: 1.5rem;
+}
+
+.way-text strong {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+@media (min-width: 52rem) {
+  .ways {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .way {
+    min-height: 30rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .way img {
+    transition: none;
+  }
+}
+
+/* The story of the valley: a photo and four numbered steps. */
+
+.story {
   background: var(--surface);
-  border: 1px solid var(--border);
+}
+
+.story-grid,
+.seasons-grid {
+  display: grid;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.story-photo img,
+.seasons-photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
   border-radius: var(--radius);
 }
 
-.card :is(h2, h3) {
-  margin: 0.25rem 0 0;
-  font-size: 1.125rem;
+.steps {
+  display: grid;
+  gap: 1.5rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
 }
 
-.card :is(h2, h3) a {
-  color: var(--text);
-  text-decoration: none;
+.steps li {
+  position: relative;
+  padding-left: 3.5rem;
+  counter-increment: step;
 }
 
-.card :is(h2, h3) a:hover {
-  color: var(--accent-text);
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-family: var(--font-display);
+  font-weight: 600;
 }
 
-.card p {
+.steps p {
+  margin: 0;
+}
+
+@media (min-width: 60rem) {
+  .story-grid,
+  .seasons-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .steps {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+}
+
+/* Photo cards: the attractions. */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.photo-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--background);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.photo-card:hover {
+  box-shadow: 0 1rem 2.5rem rgb(16 42 51 / 0.14);
+  transform: translateY(-2px);
+}
+
+.photo-card-image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.photo-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.photo-card-body p {
   margin: 0;
   color: var(--muted);
 }
 
-.card .icon {
-  color: var(--accent);
+.photo-card :is(h2, h3) {
+  margin: 0;
+  font-size: 1.375rem;
 }
 
-.card .more {
+.photo-card :is(h2, h3) a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* The heading's link covers the whole card. */
+.photo-card :is(h2, h3) a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.photo-card:focus-within {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 3px;
+}
+
+.photo-card :is(h2, h3) a:focus-visible {
+  outline: none;
+}
+
+.photo-card .kind {
+  color: var(--hill-deep);
+  font-size: 0.8125rem;
+  font-weight: 650;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.photo-card .where {
   margin-top: auto;
   padding-top: 0.5rem;
+  font-size: 0.875rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-card {
+    transition: none;
+  }
+
+  .photo-card:hover {
+    transform: none;
+  }
+}
+
+/* When to come. */
+
+.season-list {
+  display: grid;
+  gap: 1rem;
+  margin: 1.75rem 0 0;
+}
+
+.season-list div {
+  padding: 1.25rem 1.5rem;
+  border-left: 4px solid var(--river);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--surface);
+}
+
+.season-list div + div {
+  border-left-color: var(--earth);
+}
+
+.season-list dt {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
   font-weight: 600;
 }
 
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.375rem;
+.season-list dd {
   margin: 0.25rem 0 0;
+  color: var(--muted);
+}
+
+/* How to get here: a dark band. */
+
+.getting {
+  background: var(--night);
+  color: var(--on-night);
+}
+
+.getting .lead,
+.getting p {
+  color: var(--on-night-muted);
+}
+
+.getting a {
+  color: var(--on-night);
+}
+
+.getting-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 2rem;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.tags li {
-  padding: 0.125rem 0.625rem;
-  border: 1px solid var(--border);
-  border-radius: 999px;
+.getting-list svg {
+  color: var(--hill);
+}
+
+.getting-list h3 {
+  margin: 0.75rem 0 0.375rem;
+  color: var(--on-night);
+}
+
+.getting-list p {
+  margin: 0;
+}
+
+.getting-list .source,
+.getting-list .source a {
+  color: var(--on-night-muted);
+}
+
+.getting .button {
+  background: var(--on-night);
+  border-color: var(--on-night);
+  color: var(--night);
+}
+
+.getting .button:hover {
+  background: #ffffff;
+  border-color: #ffffff;
+}
+
+/* Lists and item pages. */
+
+.page-head {
+  margin-bottom: 1rem;
+}
+
+.group {
+  margin-top: 3rem;
+  scroll-margin-top: 1rem;
+}
+
+.item-photo img {
+  display: block;
+  width: 100%;
+  max-height: 34rem;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius);
+  margin-bottom: 2rem;
+}
+
+.sources-title {
+  margin-top: 2.5rem;
+  font-size: 1.25rem;
+}
+
+.sources {
+  padding-left: 1.25rem;
+}
+
+/* Photo credits at the end of a page. */
+
+.photo-credits {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
   color: var(--muted);
   font-size: 0.8125rem;
 }
 
-.checklist {
-  padding-left: 1.25rem;
+main > .photo-credits {
+  padding-left: 0;
+  padding-right: 0;
 }
 
-.checklist li::marker {
-  color: var(--accent);
+.photo-credits h2 {
+  margin: 0 0 0.375rem;
+  font-family: var(--font-family);
+  font-size: 0.8125rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-
-
-
-.hero {
-  padding: 2.5rem 0 1rem;
-  max-width: 52rem;
+.photo-credits ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
+
+.photo-credits a {
+  color: var(--muted);
+}
+
+/* Footer */
+
+.site-footer {
+  background: var(--night);
+  color: var(--on-night-muted);
+  font-size: 0.9375rem;
+}
+
+.site-footer .brand {
+  color: var(--on-night);
+}
+
+.footer-grid {
+  display: grid;
+  gap: 2rem;
+  padding-top: 3.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.footer-about p {
+  max-width: 26rem;
+  margin: 1rem 0 0;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.footer-links a {
+  color: var(--on-night);
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.site-footer a:focus-visible {
+  outline-color: var(--on-night);
+}
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.5rem;
+  border-top: 1px solid rgb(255 255 255 / 0.15);
+  font-size: 0.8125rem;
+}
+
+@media (min-width: 48rem) {
+  .footer-grid {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+}
+
+/* Other pages: contact box, contact details, imprint, legal texts. */
 
 .cta-box {
   margin-top: 4rem;
   padding: 2rem;
-  border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface);
 }
@@ -356,11 +947,6 @@ main {
   margin: 0;
   color: var(--muted);
 }
-
-
-
-
-
 
 .facts,
 .imprint {
@@ -432,7 +1018,7 @@ main:focus {
 /* Tables in Markdown content, such as the figures on the sustainability page. */
 main table {
   width: 100%;
-  max-width: 46rem;
+  max-width: 44rem;
   margin: 1.5rem 0;
   border-collapse: collapse;
 }
@@ -448,4 +1034,416 @@ main td {
 main th {
   color: var(--muted);
   font-weight: 600;
+}
+
+/* The smallest phones (320px): a smaller name and a narrower menu button, so
+   the longest menu label (hr "Izbornik") still fits on one row. */
+@media (max-width: 24rem) {
+  .header-row {
+    gap: 0.75rem;
+  }
+
+  .header-row .brand {
+    font-size: 1.25rem;
+  }
+
+  .header-row .logo {
+    width: 32px;
+    height: 28px;
+  }
+
+  .menu summary {
+    padding: 0 0.75rem;
+  }
+}
+
+/* Page heads: the hero, smaller, on About and Visit us. */
+
+.hero.compact {
+  min-height: max(26rem, min(70svh, 40rem));
+}
+
+.hero.compact h1 {
+  max-width: 18ch;
+}
+
+.button.secondary {
+  background: transparent;
+  color: var(--accent-text);
+  border-color: var(--accent);
+}
+
+.button.secondary:hover {
+  background: var(--surface);
+}
+
+/* About: chapters, a photo and the text side by side, alternating. */
+
+.chapter.alt {
+  background: var(--surface);
+}
+
+.chapter-grid {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+}
+
+.chapter-photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+.chapter-text {
+  max-width: 38rem;
+}
+
+.chapter-text .eyebrow {
+  color: var(--hill-deep);
+}
+
+@media (min-width: 60rem) {
+  .chapter-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .chapter.alt .chapter-photo {
+    order: 2;
+  }
+}
+
+.next {
+  padding-top: 0;
+}
+
+/* Visit us: good to know, the map, the gallery and the contact. */
+
+.tips {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tips li {
+  padding: 1.5rem;
+  background: var(--surface);
+  border-top: 4px solid var(--hill);
+  border-radius: var(--radius);
+}
+
+.tips h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+}
+
+.tips p {
+  margin: 0 0 0.5rem;
+}
+
+.valley-map {
+  margin: 0;
+}
+
+.map-frame {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: #f4f1e8;
+}
+
+.map-frame:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.map-frame svg {
+  display: block;
+  width: 100%;
+  min-width: 46rem;
+  height: auto;
+}
+
+.map-land {
+  fill: #f4f1e8;
+}
+
+.map-coast,
+.map-roads,
+.map-main-roads,
+.map-streams,
+.map-river,
+.map-border,
+.map-trail {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.map-coast {
+  stroke: var(--river);
+  stroke-width: 6;
+}
+
+.map-roads {
+  stroke: #d9cfbd;
+  stroke-width: 4;
+}
+
+.map-main-roads {
+  stroke: #c4b59b;
+  stroke-width: 7;
+}
+
+.map-streams {
+  stroke: #8fc9e6;
+  stroke-width: 3;
+}
+
+.map-river {
+  stroke: var(--river);
+  stroke-width: 9;
+}
+
+.map-border {
+  stroke: #8a4f7d;
+  stroke-width: 4;
+  stroke-dasharray: 18 10 4 10;
+}
+
+.map-trail {
+  stroke: var(--earth);
+  stroke-width: 5;
+  stroke-dasharray: 2 12;
+}
+
+.map-village circle {
+  fill: var(--text);
+}
+
+.map-village text {
+  fill: var(--text);
+  font-family: var(--font-family);
+  font-size: 34px;
+  font-weight: 600;
+  paint-order: stroke;
+  stroke: #f4f1e8;
+  stroke-width: 8px;
+}
+
+/* A small map in place of a photo (src/components/MiniMap.astro). */
+.mini-map {
+  position: relative;
+  background: #f4f1e8;
+}
+
+.mini-map img,
+.mini-map-pin {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+}
+
+.item-photo .mini-map img,
+.item-photo .mini-map-pin {
+  aspect-ratio: 2 / 1;
+}
+
+.mini-map-pin {
+  position: absolute;
+  inset: 0;
+}
+
+.mini-map-pin circle {
+  fill: var(--accent);
+  stroke: #ffffff;
+  stroke-width: 6;
+}
+
+.mini-map-pin .mini-map-dot {
+  fill: #ffffff;
+  stroke: none;
+}
+
+/* From a point to its marker, when the marker had to move (src/lib/spread.mjs). */
+.map-leader line {
+  stroke: var(--accent);
+  stroke-width: 4;
+}
+
+.map-leader circle {
+  fill: var(--accent);
+}
+
+.map-marker circle {
+  fill: var(--accent);
+  stroke: #ffffff;
+  stroke-width: 5;
+}
+
+.map-marker text {
+  fill: #ffffff;
+  font-family: var(--font-family);
+  font-size: 32px;
+  font-weight: 700;
+  text-anchor: middle;
+}
+
+.map-marker:hover circle,
+.map-marker:focus-visible circle {
+  fill: var(--night);
+}
+
+.map-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.map-key li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.key {
+  display: inline-block;
+  width: 1.75rem;
+  height: 0;
+  border-top: 4px solid;
+}
+
+.key-river {
+  border-color: var(--river);
+}
+
+.key-trail {
+  border-top-style: dotted;
+  border-color: var(--earth);
+}
+
+.key-border {
+  border-top-style: dashed;
+  border-color: #8a4f7d;
+}
+
+.key-roads {
+  border-color: #c4b59b;
+}
+
+.map-legend-title {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 1.125rem;
+}
+
+.map-legend {
+  columns: 16rem auto;
+  column-gap: 2rem;
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.map-legend li {
+  break-inside: avoid;
+  padding: 0.125rem 0;
+}
+
+.map-credit {
+  margin: 1rem 0 0;
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+
+.map-credit a {
+  color: inherit;
+}
+
+.gallery-band {
+  background: var(--surface);
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(46%, 15rem), 1fr));
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gallery a {
+  display: block;
+  overflow: hidden;
+  border-radius: calc(var(--radius) * 0.75);
+}
+
+.gallery img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.gallery a:hover img {
+  transform: scale(1.04);
+}
+
+.gallery a:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery img {
+    transition: none;
+  }
+}
+
+.contact-band {
+  text-align: center;
+}
+
+.contact-band .lead {
+  margin-inline: auto;
+}
+
+.contact-band .actions {
+  justify-content: center;
+}
+
+/* Attractions: jump links to the kinds. */
+
+.kind-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.kind-nav a {
+  padding: 0.375rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.kind-nav a:hover {
+  border-color: var(--accent);
+  color: var(--accent-text);
 }

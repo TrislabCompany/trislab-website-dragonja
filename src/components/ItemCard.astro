@@ -1,9 +1,13 @@
 ---
-// An item in a list: title, summary and a link to its page.
+// An attraction in a list: its photo, kind, title, summary and where it is.
+// The whole card is one link (the heading's link stretches over it).
 import type { CollectionEntry } from "astro:content";
 import { localizedPath, t, type Lang } from "../i18n";
 import { entrySlug } from "../lib/content";
 import type { ItemCollection } from "../lib/items";
+import { attractionPoints } from "../lib/places";
+import MiniMap from "./MiniMap.astro";
+import Photo from "./Photo.astro";
 
 interface Props {
   entry: CollectionEntry<ItemCollection>;
@@ -11,17 +15,34 @@ interface Props {
   lang: Lang;
   // The card's heading level: one below the heading of the list it is in.
   level?: 2 | 3;
+  // The first card of a page without a hero is its largest paint: load it first.
+  eager?: boolean;
 }
 
-const { entry, collection, lang, level = 3 } = Astro.props;
+const { entry, collection, lang, level = 3, eager = false } = Astro.props;
 const Heading = `h${level}` as const;
 const href = localizedPath(lang, `/${collection}/${entrySlug(entry)}`);
+const { title, summary, kind, photo, where } = entry.data;
+const point = attractionPoints[entrySlug(entry)];
+if (!photo && !point) throw new Error(`${entry.id}: an attraction needs a photo or a point on the map (src/lib/places.ts).`);
 ---
 
 <li>
-  <article class="card">
-    <Heading><a href={href}>{entry.data.title}</a></Heading>
-    <p>{entry.data.summary}</p>
-    <a class="more" href={href} aria-hidden="true" tabindex="-1">{t(lang, "cta.readMore")} →</a>
+  <article class="photo-card">
+    <div class="photo-card-image">
+      {
+        photo ? (
+          <Photo id={photo} lang={lang} widths={[400, 560]} sizes="(min-width: 76rem) 23rem, (min-width: 40rem) 45vw, 92vw" decorative eager={eager} />
+        ) : (
+          <MiniMap point={point!} width={600} height={400} alt="" eager={eager} />
+        )
+      }
+    </div>
+    <div class="photo-card-body">
+      <p class="kind">{t(lang, `kind.${kind}` as const)}</p>
+      <Heading><a href={href}>{title}</a></Heading>
+      <p>{summary}</p>
+      <p class="where">{where}</p>
+    </div>
   </article>
 </li>
