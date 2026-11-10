@@ -15,6 +15,8 @@ const en = {
   "photos.title": "Photos",
   "photos.own": "dragonja.si",
   "item.where": "Where",
+  "item.map": "Map",
+  "photos.map": "Map data",
   "item.sources": "Sources",
   "kind.nature": "Nature",
   "kind.culture": "Culture",

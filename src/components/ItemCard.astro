@@ -5,6 +5,8 @@ import type { CollectionEntry } from "astro:content";
 import { localizedPath, t, type Lang } from "../i18n";
 import { entrySlug } from "../lib/content";
 import type { ItemCollection } from "../lib/items";
+import { attractionPoints } from "../lib/places";
+import MiniMap from "./MiniMap.astro";
 import Photo from "./Photo.astro";
 
 interface Props {
@@ -21,12 +23,20 @@ const { entry, collection, lang, level = 3, eager = false } = Astro.props;
 const Heading = `h${level}` as const;
 const href = localizedPath(lang, `/${collection}/${entrySlug(entry)}`);
 const { title, summary, kind, photo, where } = entry.data;
+const point = attractionPoints[entrySlug(entry)];
+if (!photo && !point) throw new Error(`${entry.id}: an attraction needs a photo or a point on the map (src/lib/places.ts).`);
 ---
 
 <li>
   <article class="photo-card">
     <div class="photo-card-image">
-      <Photo id={photo} lang={lang} widths={[400, 600]} sizes="(min-width: 76rem) 23rem, (min-width: 40rem) 45vw, 92vw" decorative eager={eager} />
+      {
+        photo ? (
+          <Photo id={photo} lang={lang} widths={[400, 560]} sizes="(min-width: 76rem) 23rem, (min-width: 40rem) 45vw, 92vw" decorative eager={eager} />
+        ) : (
+          <MiniMap point={point!} width={600} height={400} alt="" eager={eager} />
+        )
+      }
     </div>
     <div class="photo-card-body">
       <p class="kind">{t(lang, `kind.${kind}` as const)}</p>

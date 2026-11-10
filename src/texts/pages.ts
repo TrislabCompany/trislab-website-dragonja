@@ -75,10 +75,10 @@ export const about: Record<Lang, AboutTexts> = {
         title: "Mlini in vrtovi",
         photo: aboutPhotos.mills,
         paragraphs: [
-          "V dolini je nekoč delovalo približno 40 mlinov. Mazurinov mlin na Rokavi je obnovljen.",
+          "V dolini je nekoč delovalo približno 40 mlinov. Obnovljena sta Kodarinov mlin pri Koštaboni in Mazurinov pri Trseku.",
           "V začetku 20. stoletja je koprsko zaledje z dolino Dragonje oskrbovalo z zelenjavo in pridelki obalna mesta in sosednji Trst.",
         ],
-        sources: ["parks"],
+        sources: ["parks", "mills"],
       },
       {
         id: "hamlets",
@@ -123,10 +123,10 @@ export const about: Record<Lang, AboutTexts> = {
         title: "Mills and gardens",
         photo: aboutPhotos.mills,
         paragraphs: [
-          "About 40 mills once worked in the valley. The Mazurin mill on the Rokava has been restored.",
+          "About 40 mills once worked in the valley. Two are restored: the Kodarin mill near Koštabona and the Mazurin mill at Trsek.",
           "In the early 20th century the hinterland of Koper, the Dragonja valley included, supplied the coastal towns and Trieste next door with vegetables and farm produce.",
         ],
-        sources: ["parks"],
+        sources: ["parks", "mills"],
       },
       {
         id: "hamlets",
@@ -171,10 +171,10 @@ export const about: Record<Lang, AboutTexts> = {
         title: "Mlinovi i vrtovi",
         photo: aboutPhotos.mills,
         paragraphs: [
-          "U dolini je nekad radilo oko 40 mlinova. Mlin Mazurin na Rokavi obnovljen je.",
+          "U dolini je nekad radilo oko 40 mlinova. Obnovljena su dva: Kodarinov mlin kod Koštabone i Mazurinov kod Trseka.",
           "Početkom 20. stoljeća koparsko zaleđe s dolinom Dragonje opskrbljivalo je povrćem i poljoprivrednim proizvodima obalne gradove i susjedni Trst.",
         ],
-        sources: ["parks"],
+        sources: ["parks", "mills"],
       },
       {
         id: "hamlets",
@@ -219,10 +219,10 @@ export const about: Record<Lang, AboutTexts> = {
         title: "Mulini e orti",
         photo: aboutPhotos.mills,
         paragraphs: [
-          "Un tempo nella valle lavoravano circa 40 mulini. Il mulino Mazurin sulla Rokava è stato restaurato.",
+          "Un tempo nella valle lavoravano circa 40 mulini. Due sono stati restaurati: il mulino Kodarin vicino a Costabona e il mulino Mazurin a Trsek.",
           "All'inizio del Novecento l'entroterra di Capodistria, valle della Dragogna compresa, riforniva di verdura e prodotti agricoli le città della costa e la vicina Trieste.",
         ],
-        sources: ["parks"],
+        sources: ["parks", "mills"],
       },
       {
         id: "hamlets",
@@ -267,10 +267,10 @@ export const about: Record<Lang, AboutTexts> = {
         title: "Mühlen und Gärten",
         photo: aboutPhotos.mills,
         paragraphs: [
-          "Im Tal arbeiteten einst etwa 40 Mühlen. Die Mazurin-Mühle an der Rokava ist restauriert.",
+          "Im Tal arbeiteten einst etwa 40 Mühlen. Zwei sind restauriert: die Kodarin-Mühle bei Koštabona und die Mazurin-Mühle bei Trsek.",
           "Anfang des 20. Jahrhunderts versorgte das Hinterland von Koper, das Dragonja-Tal eingeschlossen, die Küstenstädte und das benachbarte Triest mit Gemüse und Feldfrüchten.",
         ],
-        sources: ["parks"],
+        sources: ["parks", "mills"],
       },
       {
         id: "hamlets",

@@ -9,6 +9,7 @@ export const sources = {
   wikiEn: { title: "Wikipedia: Dragonja", url: "https://en.wikipedia.org/wiki/Dragonja" },
   wikiVillage: { title: "Wikipedia: Dragonja, Piran", url: "https://en.wikipedia.org/wiki/Dragonja,_Piran" },
   wikiVillageSl: { title: "Wikipedija: Dragonja (Piran)", url: "https://sl.wikipedia.org/wiki/Dragonja,_Piran" },
+  mills: { title: "Agencija 41: Mlini na reki Dragonji", url: "http://www.agencija41.si/mlini-na-reki-dragonji/" },
   kpss: { title: "Krajinski park Sečoveljske soline", url: "https://www.kpss.si/en/visiting" },
   parks: {
     title: "Naravni parki Slovenije",
@@ -78,8 +79,8 @@ const sl: HomeTexts = {
       },
       {
         title: "Mlini",
-        text: "Ob reki in njenih pritokih je nekoč mlelo okoli 40 mlinov. Mazurinov mlin na potoku Rokava je obnovljen.",
-        source: "parks",
+        text: "Ob reki in njenih pritokih je nekoč mlelo okoli 40 mlinov. Obnovljena sta Kodarinov mlin pri Koštaboni in Mazurinov pri Trseku.",
+        source: "mills",
       },
       {
         title: "Zaselki",
@@ -156,8 +157,8 @@ const en: HomeTexts = {
       },
       {
         title: "The mills",
-        text: "About 40 mills once worked along the river and its streams. The Mazurin mill on the Rokava stream has been restored.",
-        source: "parks",
+        text: "About 40 mills once worked along the river and its streams. Two are restored: the Kodarin mill near Koštabona and the Mazurin mill at Trsek.",
+        source: "mills",
       },
       {
         title: "The hamlets",
@@ -234,8 +235,8 @@ const hr: HomeTexts = {
       },
       {
         title: "Mlinovi",
-        text: "Uz rijeku i njezine pritoke nekoć je mljelo oko 40 mlinova. Mlin Mazurin na potoku Rokava je obnovljen.",
-        source: "parks",
+        text: "Uz rijeku i njezine pritoke nekoć je mljelo oko 40 mlinova. Obnovljena su dva: Kodarinov mlin kod Koštabone i Mazurinov kod Trseka.",
+        source: "mills",
       },
       {
         title: "Zaseoci",
@@ -312,8 +313,8 @@ const it: HomeTexts = {
       },
       {
         title: "I mulini",
-        text: "Lungo il fiume e i suoi affluenti lavoravano un tempo circa 40 mulini. Il mulino Mazurin sul torrente Rokava è stato restaurato.",
-        source: "parks",
+        text: "Lungo il fiume e i suoi affluenti lavoravano un tempo circa 40 mulini. Due sono stati restaurati: il mulino Kodarin vicino a Costabona e il mulino Mazurin a Trsek.",
+        source: "mills",
       },
       {
         title: "Le frazioni",
@@ -390,8 +391,8 @@ const de: HomeTexts = {
       },
       {
         title: "Die Mühlen",
-        text: "Am Fluss und seinen Bächen arbeiteten einst rund 40 Mühlen. Die Mazurin-Mühle am Bach Rokava wurde restauriert.",
-        source: "parks",
+        text: "Am Fluss und seinen Bächen arbeiteten einst rund 40 Mühlen. Zwei sind restauriert: die Kodarin-Mühle bei Koštabona und die Mazurin-Mühle bei Trsek.",
+        source: "mills",
       },
       {
         title: "Die Weiler",

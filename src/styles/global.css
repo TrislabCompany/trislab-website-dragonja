@@ -1237,6 +1237,51 @@ main th {
   stroke-width: 8px;
 }
 
+/* A small map in place of a photo (src/components/MiniMap.astro). */
+.mini-map {
+  position: relative;
+  background: #f4f1e8;
+}
+
+.mini-map img,
+.mini-map-pin {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+}
+
+.item-photo .mini-map img,
+.item-photo .mini-map-pin {
+  aspect-ratio: 2 / 1;
+}
+
+.mini-map-pin {
+  position: absolute;
+  inset: 0;
+}
+
+.mini-map-pin circle {
+  fill: var(--accent);
+  stroke: #ffffff;
+  stroke-width: 6;
+}
+
+.mini-map-pin .mini-map-dot {
+  fill: #ffffff;
+  stroke: none;
+}
+
+/* From a point to its marker, when the marker had to move (src/lib/spread.mjs). */
+.map-leader line {
+  stroke: var(--accent);
+  stroke-width: 4;
+}
+
+.map-leader circle {
+  fill: var(--accent);
+}
+
 .map-marker circle {
   fill: var(--accent);
   stroke: #ffffff;

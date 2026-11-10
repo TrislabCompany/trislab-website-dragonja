@@ -13,6 +13,8 @@ const sl: UiStrings = {
   "photos.title": "Fotografije",
   "photos.own": "dragonja.si",
   "item.where": "Kje",
+  "item.map": "Zemljevid",
+  "photos.map": "Podatki zemljevida",
   "item.sources": "Viri",
   "kind.nature": "Narava",
   "kind.culture": "Kultura",

@@ -10,6 +10,9 @@ import mazurinMill from "../assets/photos/mazurin-mill.jpg";
 import riverMouth from "../assets/photos/river-mouth.jpg";
 import skrline from "../assets/photos/skrline.jpg";
 import truske from "../assets/photos/truske.jpg";
+import supot from "../assets/photos/supot.jpg";
+import krkavceStone from "../assets/photos/krkavce-stone.jpg";
+import toninaHouse from "../assets/photos/tonina-house.jpg";
 import valleyEdge from "../assets/photos/valley-edge.jpg";
 import borderView from "../assets/photos/border-view.jpg";
 import novaVas from "../assets/photos/nova-vas.jpg";
@@ -254,6 +257,39 @@ export const photos = {
       de: "Die Mündung der Dragonja: ein breiter Lauf zwischen Steinufern, auf dem Boote rudern.",
     },
     credit: { author: "Žiga", licence: "Public domain", source: commons("DragonjaIzliv.JPG") },
+  },
+  supot: {
+    src: supot,
+    alt: {
+      sl: "Slap Supot pada čez previs iz flišnih plasti v zelenkast tolmun, ob robu ledene sveče.",
+      en: "The Supot waterfall falling over a ledge of flysch layers into a green pool, with icicles at its edge.",
+      hr: "Slap Supot pada preko izbočine od flišnih slojeva u zelenkasti bazen, uz rub ledenice.",
+      it: "La cascata di Supot cade da una sporgenza di strati di flysch in una pozza verde, con ghiaccioli ai lati.",
+      de: "Der Supot-Wasserfall stürzt über eine Kante aus Flyschschichten in ein grünes Becken, am Rand Eiszapfen.",
+    },
+    credit: { author: "Milan Rejec", ...ccBy3, source: commons("Slap_Supot_pod_Koštabono._-_panoramio.jpg") },
+  },
+  "krkavce-stone": {
+    src: krkavceStone,
+    alt: {
+      sl: "Visok pokončen kamen, Krkavški kamen, pred zelenim grmovjem pod modrim nebom.",
+      en: "A tall standing stone, the Krkavče stone, in front of green bushes under a blue sky.",
+      hr: "Visok uspravan kamen, Krkavški kamen, ispred zelenog grmlja pod plavim nebom.",
+      it: "Un'alta pietra eretta, la pietra di Carcauzze, davanti a cespugli verdi sotto il cielo azzurro.",
+      de: "Ein hoher aufrechter Stein, der Stein von Krkavče, vor grünen Büschen unter blauem Himmel.",
+    },
+    credit: { author: "Ajznponar", ...ccBySa4, source: commons("Menhir_of_Krkavce_01.jpg") },
+  },
+  "tonina-house": {
+    src: toninaHouse,
+    alt: {
+      sl: "Tonina hiša v Svetem Petru: kamnita hiša z opečno streho, dimnikom in brajdo v večernem soncu.",
+      en: "Tona's house in Sveti Peter: a stone house with a tiled roof, chimneys and a pergola in the evening sun.",
+      hr: "Tonina kuća u Svetom Petru: kamena kuća s crijepom, dimnjacima i pergolom na večernjem suncu.",
+      it: "La casa di Tona a San Pietro: una casa in pietra con tetto di coppi, comignoli e pergolato al sole della sera.",
+      de: "Tonas Haus in Sveti Peter: ein Steinhaus mit Ziegeldach, Schornsteinen und Pergola in der Abendsonne.",
+    },
+    credit: { author: "Janez Novak, Ljubljana", ...ccBy3, source: commons("Tonina_hiša_zunanjost.JPG") },
   },
 } satisfies Record<string, Photo>;
 

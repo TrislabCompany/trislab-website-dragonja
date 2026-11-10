@@ -1,0 +1,39 @@
+---
+// In place of a photo, for an attraction that has none: the part of the
+// valley map around it (/map/valley.svg, src/pages/map/valley.svg.ts), with a
+// pin on the place. One file for every small map, so a list of cards loads it
+// once. The pin is a small SVG with the same viewBox laid over the image (a
+// style attribute would be blocked by the Content-Security-Policy). Credited
+// by PhotoCredits with `map`.
+import { at, crop } from "../lib/map";
+import type { Point } from "../lib/places";
+
+interface Props {
+  point: Point;
+  /** The part of the map shown, in map pixels (about 10 m each). */
+  width: number;
+  height: number;
+  /** Empty on a card, whose heading names the place. */
+  alt: string;
+  eager?: boolean;
+}
+
+const { point, width, height, alt, eager = false } = Astro.props;
+const { viewBox } = crop(point, width, height);
+const { x, y } = at(point);
+---
+
+<div class="mini-map">
+  <img
+    src={`/map/valley.svg#svgView(viewBox(${viewBox}))`}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={eager ? "eager" : "lazy"}
+    decoding="async"
+  />
+  <svg class="mini-map-pin" viewBox={viewBox.replaceAll(",", " ")} aria-hidden="true" focusable="false">
+    <circle cx={x} cy={y} r="26" />
+    <circle cx={x} cy={y} r="9" class="mini-map-dot" />
+  </svg>
+</div>

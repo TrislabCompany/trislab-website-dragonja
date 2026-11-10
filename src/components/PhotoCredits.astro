@@ -2,14 +2,17 @@
 // The credits of the photos on a page: author, licence and source, as the
 // Creative Commons licences ask. Each page lists the photos it shows.
 import { t, type Lang } from "../i18n";
+import mapData from "../assets/map/valley.json";
 import { photo } from "../lib/photos";
 
 interface Props {
   ids: string[];
+  /** The page shows the valley map (MiniMap): credit OpenStreetMap too. */
+  map?: boolean;
   lang: Lang;
 }
 
-const { ids, lang } = Astro.props;
+const { ids, map = false, lang } = Astro.props;
 // One line per credit: two photos with the same author, licence and source
 // share it, and the line carries the ids of all of them.
 const byCredit = new Map<string, { ids: string[]; author: string; licence: string; licenceUrl?: string; source: string }>();
@@ -39,6 +42,13 @@ const credits = [...byCredit.values()];
           )}
         </li>
       ))
+    }
+    {
+      map && (
+        <li>
+          {t(lang, "photos.map")}: <a href={mapData.licence}>{mapData.attribution}</a>
+        </li>
+      )
     }
   </ul>
 </aside>

@@ -13,6 +13,8 @@ const de: UiStrings = {
   "photos.title": "Fotos",
   "photos.own": "dragonja.si",
   "item.where": "Wo",
+  "item.map": "Karte",
+  "photos.map": "Kartendaten",
   "item.sources": "Quellen",
   "kind.nature": "Natur",
   "kind.culture": "Kultur",

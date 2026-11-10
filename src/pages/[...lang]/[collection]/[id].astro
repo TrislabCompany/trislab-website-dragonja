@@ -1,5 +1,6 @@
 ---
 import { render, type CollectionEntry } from "astro:content";
+import MiniMap from "../../../components/MiniMap.astro";
 import Photo from "../../../components/Photo.astro";
 import PhotoCredits from "../../../components/PhotoCredits.astro";
 import { localizedPath, t, type Lang } from "../../../i18n";
@@ -31,7 +32,13 @@ const place = {
 <BaseLayout title={title} description={summary} lang={lang} available={available} share={photo} place={place}>
   <article class="item">
     <div class="item-photo">
-      <Photo id={photo} lang={lang} widths={[640, 1024, 1440]} sizes="(min-width: 72rem) 70rem, 100vw" eager />
+      {
+        photo ? (
+          <Photo id={photo} lang={lang} widths={[640, 1024, 1440]} sizes="(min-width: 72rem) 70rem, 100vw" eager />
+        ) : (
+          <MiniMap point={place.point!} width={1000} height={500} alt={`${t(lang, "item.map")}: ${where}`} eager />
+        )
+      }
     </div>
     <div class="prose">
       <p class="eyebrow">
@@ -56,5 +63,5 @@ const place = {
       </ul>
     </div>
   </article>
-  <PhotoCredits ids={[photo]} lang={lang} />
+  <PhotoCredits ids={photo ? [photo] : []} map={!photo} lang={lang} />
 </BaseLayout>

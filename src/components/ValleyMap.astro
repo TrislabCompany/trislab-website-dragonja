@@ -8,6 +8,8 @@
 import map from "../assets/map/valley.json";
 import type { Lang } from "../i18n";
 import { villages, type Point } from "../lib/places";
+import { at } from "../lib/map";
+import { spread } from "../lib/spread.mjs";
 
 interface Marker {
   n: number;
@@ -23,11 +25,25 @@ interface Props {
 }
 
 const { markers, text } = Astro.props;
-const cos = Math.cos((((map.box.north + map.box.south) / 2) * Math.PI) / 180);
-const at = ({ lat, lon }: Point) => ({
-  x: Math.round((lon - map.box.west) * cos * map.scale),
-  y: Math.round((map.box.north - lat) * map.scale),
+// A marker is 60 px wide; points closer than that are spread apart.
+const RADIUS = 30;
+const points = markers.map((marker) => at(marker.point));
+// The villages' dots and names, which markers keep off: a name is about
+// 19 px a letter at 34 px, drawn above and beside its dot as below.
+const nameBox = (village: (typeof villages)[number]) => {
+  const { x, y } = at(village);
+  const w = village.name.length * 19 + 14;
+  const left = x > map.width - 240;
+  return { x: left ? x - w : x - 8, y: y - 40, width: w + 8, height: 48 };
+};
+const spots = spread(points, {
+  gap: RADIUS * 2 + 6,
+  width: map.width,
+  height: map.height,
+  margin: RADIUS + 4,
+  obstacles: villages.map(nameBox),
 });
+const moved = (i: number) => points[i]!.x !== spots[i]!.x || points[i]!.y !== spots[i]!.y;
 const centre = { lat: (map.box.north + map.box.south) / 2, lon: (map.box.east + map.box.west) / 2 };
 const osm = `https://www.openstreetmap.org/#map=12/${centre.lat.toFixed(4)}/${centre.lon.toFixed(4)}`;
 ---
@@ -59,13 +75,23 @@ const osm = `https://www.openstreetmap.org/#map=12/${centre.lat.toFixed(4)}/${ce
           );
         })
       }
+      {
+        points.map((point, i) =>
+          moved(i) ? (
+            <g class="map-leader">
+              <line x1={point.x} y1={point.y} x2={spots[i]!.x} y2={spots[i]!.y} />
+              <circle cx={point.x} cy={point.y} r="7" />
+            </g>
+          ) : null,
+        )
+      }
       </g>
       {
-        markers.map((marker) => {
-          const { x, y } = at(marker.point);
+        markers.map((marker, i) => {
+          const { x, y } = spots[i]!;
           return (
             <a href={marker.href} class="map-marker" aria-label={`${marker.n}. ${marker.title}`}>
-              <circle cx={x} cy={y} r="30" />
+              <circle cx={x} cy={y} r={RADIUS} />
               <text x={x} y={y + 11} aria-hidden="true">
                 {marker.n}
               </text>

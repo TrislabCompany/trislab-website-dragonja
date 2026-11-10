@@ -35,5 +35,9 @@ const groups = kinds.map((kind) => ({ kind, items: items.filter((entry) => entry
       </section>
     ))
   }
-  <PhotoCredits ids={items.map((entry) => entry.data.photo)} lang={lang} />
+  <PhotoCredits
+    ids={items.flatMap((entry) => (entry.data.photo ? [entry.data.photo] : []))}
+    map={items.some((entry) => !entry.data.photo)}
+    lang={lang}
+  />
 </BaseLayout>

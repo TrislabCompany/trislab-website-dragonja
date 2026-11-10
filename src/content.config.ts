@@ -21,8 +21,12 @@ const attractions = defineCollection({
     tags: z.array(z.string()).default([]),
     /** What it is: the groups on the list page and the "ways in" on the home page. */
     kind: z.enum(["nature", "culture", "activity", "place"]),
-    /** A photo id from src/lib/photos.ts; the build fails on an unknown id. */
-    photo: z.string(),
+    /**
+     * A photo id from src/lib/photos.ts; the build fails on an unknown id.
+     * Without one, the attraction shows the map around its point
+     * (src/lib/places.ts) instead: never a photo of another place.
+     */
+    photo: z.string().optional(),
     /** Where it is, in a few words ("2 km upstream of the village"). */
     where: z.string(),
     /** Shown on the home page, in this order. */

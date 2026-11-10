@@ -13,6 +13,8 @@ const it: UiStrings = {
   "photos.title": "Fotografie",
   "photos.own": "dragonja.si",
   "item.where": "Dove",
+  "item.map": "Mappa",
+  "photos.map": "Dati della mappa",
   "item.sources": "Fonti",
   "kind.nature": "Natura",
   "kind.culture": "Cultura",

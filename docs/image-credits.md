@@ -22,7 +22,10 @@ Every photo of the site, with its source and licence. The same data is in `src/l
 | `labor` | The village of Labor | Doremo | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Labor_Koper_Slovenia_2.jpg) |
 | `valley-edge` | A view across the valley, vineyards and woods | Žiga | Public domain | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:DolinaDragonje2.JPG) |
 | `river-mouth` | The mouth of the Dragonja, with rowing boats | Žiga | Public domain | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:DragonjaIzliv.JPG) |
+| `supot` | The Supot waterfall under Koštabona | Milan Rejec | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Slap_Supot_pod_Ko%C5%A1tabono._-_panoramio.jpg) |
+| `krkavce-stone` | The Krkavče stone on its site (the copy) | Ajznponar | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Menhir_of_Krkavce_01.jpg) |
+| `tonina-house` | Tona's house in Sveti Peter | Janez Novak, Ljubljana | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) (also GFDL) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tonina_hi%C5%A1a_zunanjost.JPG) |
 
-The map on Visit us is drawn from OpenStreetMap data, © OpenStreetMap contributors, under the [ODbL](https://www.openstreetmap.org/copyright); the credit is under the map.
+The map on Visit us is drawn from OpenStreetMap data, © OpenStreetMap contributors, under the [ODbL](https://www.openstreetmap.org/copyright); the credit is under the map. An attraction with no free photo of its own shows the part of the same map around it (`/map/valley.svg`), with the same credit on its page. It never shows a photo of another place.
 
 To add a photo: put the file in `src/assets/photos/`, add it to `src/lib/photos.ts` with its alternative text in every language and its credit, and add a row here. A photo shows at most once on a page (`pnpm test` checks it). Use only photos whose licence allows publishing, and keep the credit.

@@ -25,7 +25,7 @@ const ways = [
 // on the page is skipped (scripts/check-design.mjs fails the build otherwise).
 const fixed = ["valley-cascade", ...ways.map((way) => way.photo), "border-view", "river-summer"];
 const featured = (await sortedItems("attractions", lang))
-  .filter((entry) => entry.data.featured && !fixed.includes(entry.data.photo))
+  .filter((entry) => entry.data.featured && entry.data.photo && !fixed.includes(entry.data.photo))
   .slice(0, 6);
 const getting = [
   { ...text.getting.car, icon: icons.car },
@@ -41,7 +41,7 @@ const place = {
   url: localizedPath(lang),
   includes: all.map((entry) => ({ name: entry.data.title, url: localizedPath(lang, `/attractions/${entrySlug(entry)}`) })),
 };
-const shown = [...fixed, ...featured.map((entry) => entry.data.photo)];
+const shown = [...fixed, ...featured.map((entry) => entry.data.photo!)];
 ---
 
 <BaseLayout title={site.name} lang={lang} wide place={place}>

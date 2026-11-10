@@ -17,9 +17,9 @@ The site's own design, not the template's: a calm, image-led destination site fo
 - **Photos** are registered in `src/lib/photos.ts` with their alternative text in every language and their credit; pages refer to a photo by its id, and every page lists the credits of the photos it shows. Sources and licences: [docs/image-credits.md](docs/image-credits.md).
 - **Pages** (`src/pages/[...lang]/`):
   - **Home** (`index.astro`, texts in `src/texts/home.ts`): the hero photo, three ways in, the story of the valley, featured attractions, when to come, how to get here.
-  - **Attractions** (`[collection]/`, one Markdown file per attraction and language in `src/content/attractions/`): twelve attractions grouped by kind, each with its photo, where it is, its text and its sources.
+  - **Attractions** (`[collection]/`, one Markdown file per attraction and language in `src/content/attractions/`): 22 attractions grouped by kind, each with its photo (or, without a free photo, the map around it, `src/components/MiniMap.astro`), where it is, its text and its sources.
   - **About** (`about.astro`) and **Visit us** (`visit-us.astro`), texts in `src/texts/pages.ts`. Visit us has the ways to get here, good to know, the seasons, the map and the gallery.
-- **Map:** OpenStreetMap data drawn as inline SVG (`src/components/ValleyMap.astro`), so no visitor's browser asks another server. `scripts/make-map.mjs` makes `src/assets/map/valley.json` from the Overpass API; run it by hand when the map should change. The points of the attractions are in `src/lib/places.ts`.
+- **Map:** OpenStreetMap data drawn as inline SVG (`src/components/ValleyMap.astro`), so no visitor's browser asks another server. `scripts/make-map.mjs` makes `src/assets/map/valley.json` from the Overpass API; run it by hand when the map should change. The points of the attractions are in `src/lib/places.ts`; markers closer than their width are spread apart, with a line back to their place, and keep off the village names (`src/lib/spread.mjs`).
 - **Structured data:** the valley as a `TouristDestination` on the home page, each attraction as a `TouristAttraction` with its point (`src/components/PlaceData.astro`).
 - **Old addresses:** `/about`, `/attractions` and `/visit-us` of the earlier site redirect to the Slovenian pages (`public/_redirects`); `www.dragonja.si` is redirected by Cloudflare.
 
