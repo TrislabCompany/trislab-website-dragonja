@@ -1,0 +1,13 @@
+---
+// One 404 page for the whole site, in the default language: Cloudflare Pages
+// serves it, with status 404, for any address that is not a file.
+import { defaultLanguage, localizedPath, t } from "../i18n";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const lang = defaultLanguage;
+---
+
+<BaseLayout title={t(lang, "notFound.title")} lang={lang} available={[lang]} noindex>
+  <h1>{t(lang, "notFound.title")}</h1>
+  <p>{t(lang, "notFound.text")} <a href={localizedPath(lang)}>{t(lang, "notFound.home")}</a>.</p>
+</BaseLayout>

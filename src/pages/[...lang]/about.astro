@@ -1,0 +1,19 @@
+---
+import ContactCta from "../../components/ContactCta.astro";
+import { languagePaths, t, type Lang } from "../../i18n";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import site from "../../site.config";
+
+export const getStaticPaths = languagePaths;
+
+const { lang } = Astro.props as { lang: Lang };
+---
+
+<BaseLayout title={t(lang, "nav.about")} lang={lang}>
+  <div class="prose">
+    <h1>{t(lang, "nav.about")}</h1>
+    <p class="lead">{site.description[lang]}</p>
+    {/* Sample page: replace the text above with the site's own, in every language, or move it to Markdown in src/content/. */}
+  </div>
+  <ContactCta lang={lang} />
+</BaseLayout>

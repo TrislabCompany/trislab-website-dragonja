@@ -1,0 +1,103 @@
+import assert from 'node:assert/strict';
+import { test } from 'node:test';
+import { blockSkills, checkManifest, globToRegExp, ownershipOf } from './check-template-manifest.mjs';
+
+const manifest = {
+  template: 'template-website',
+  skills: { release: 'platform', 'release-template': 'template-only' },
+  paths: [
+    { path: '.agents/skills/release-template/**', ownership: 'template-only' },
+    { path: '.agents/skills/release/**', ownership: 'platform' },
+    { path: '.claude/skills/release-template/**', ownership: 'template-only' },
+    { path: '.claude/skills/release/**', ownership: 'platform' },
+    { path: '.github/workflows/*', ownership: 'platform' },
+    { path: 'src/**', ownership: 'product' },
+    { path: 'AGENTS.md', ownership: 'shared' },
+  ],
+};
+const skill = (name, ownership) =>
+  `---\nname: ${name}\ndescription: x\nmetadata:\n  owner: template-website\n  ownership: ${ownership}\n---\n# ${name}\n`;
+const pointer = (name, ownership) => `${skill(name, ownership).split('# ')[0]}Read .agents/skills/${name}/SKILL.md\n`;
+const agents = '# x\n<!-- template-skills:start -->\n| Skill | Use |\n| --- | --- |\n| [`release`](x) | y |\n<!-- template-skills:end -->\n';
+const valid = () => ({
+  manifest,
+  files: ['src/a/b.ts', '.github/workflows/ci.yml', 'AGENTS.md', '.agents/skills/release/SKILL.md'],
+  skillFiles: { release: skill('release', 'platform'), 'release-template': skill('release-template', 'template-only') },
+  pointerFiles: {
+    release: pointer('release', 'platform'),
+    'release-template': pointer('release-template', 'template-only'),
+  },
+  agentsMd: agents,
+});
+
+test('globs: * stays in one folder, ** crosses folders', () => {
+  assert.ok(globToRegExp('.github/workflows/*').test('.github/workflows/ci.yml'));
+  assert.ok(!globToRegExp('.github/workflows/*').test('.github/workflows/a/ci.yml'));
+  assert.ok(globToRegExp('src/**').test('src/pages/[...lang]/index.astro'));
+  assert.ok(globToRegExp('docs/upgrading/template-*.md').test('docs/upgrading/template-v0.1.0.md'));
+  assert.ok(!globToRegExp('docs/upgrading/template-*.md').test('docs/upgrading/README.md'));
+});
+
+test('the first matching rule wins', () => {
+  assert.equal(ownershipOf(manifest, '.agents/skills/release-template/SKILL.md'), 'template-only');
+  assert.equal(ownershipOf(manifest, '.agents/skills/release/SKILL.md'), 'platform');
+  assert.equal(ownershipOf(manifest, 'README.md'), undefined);
+});
+
+test('a valid template passes', () => {
+  assert.deepEqual(checkManifest(valid()), []);
+});
+
+test('a file without a rule fails', () => {
+  const input = valid();
+  input.files.push('README.md');
+  assert.match(checkManifest(input).join('\n'), /README.md matches no rule/);
+});
+
+test('an unlisted skill folder fails', () => {
+  const input = valid();
+  input.skillFiles.extra = skill('extra', 'shared');
+  assert.match(checkManifest(input).join('\n'), /\.agents\/skills\/extra is not listed/);
+});
+
+test('front matter must repeat the owner and ownership', () => {
+  const input = valid();
+  input.skillFiles.release = skill('release', 'shared');
+  assert.match(checkManifest(input).join('\n'), /metadata.ownership must be platform/);
+});
+
+test('the AGENTS.md block lists the skills a product gets, not template-only ones', () => {
+  assert.deepEqual(blockSkills(agents), ['release']);
+  const input = valid();
+  input.agentsMd = agents.replace('| [`release`](x) | y |', '| [`release`](x) | y |\n| `release-template` | z |');
+  assert.match(checkManifest(input).join('\n'), /expected \[release\]/);
+  input.agentsMd = '# no block';
+  assert.match(checkManifest(input).join('\n'), /needs a template skills block/);
+});
+
+test('every skill needs a pointer in .claude/skills with the same front matter', () => {
+  let input = valid();
+  delete input.pointerFiles.release;
+  assert.match(checkManifest(input).join('\n'), /skill release has no pointer/);
+
+  input = valid();
+  input.pointerFiles.release = pointer('release', 'platform').replace('description: x', 'description: other');
+  assert.match(checkManifest(input).join('\n'), /front matter must be the same/);
+
+  input = valid();
+  input.pointerFiles.gone = pointer('gone', 'platform');
+  assert.match(checkManifest(input).join('\n'), /\.claude\/skills\/gone points to no skill/);
+
+  input = valid();
+  input.manifest = { ...manifest, paths: manifest.paths.filter((r) => r.path !== '.claude/skills/release/**') };
+  assert.match(checkManifest(input).join('\n'), /its pointer's path is undefined/);
+});
+
+test('the class sample is allowed for a path but not for a skill', () => {
+  const input = valid();
+  input.manifest = { ...manifest, paths: [{ path: 'src/content/services/**', ownership: 'sample' }, ...manifest.paths] };
+  input.files.push('src/content/services/en/a.md');
+  assert.deepEqual(checkManifest(input), []);
+  input.manifest = { ...input.manifest, skills: { ...manifest.skills, extra: 'sample' } };
+  assert.match(checkManifest(input).join('\n'), /skill extra: ownership must be platform, shared or template-only, not sample/);
+});
