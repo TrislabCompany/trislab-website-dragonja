@@ -12,14 +12,13 @@ import en, { type UiKey, type UiStrings } from "./ui/en";
 import hr from "./ui/hr";
 import it from "./ui/it";
 import sl from "./ui/sl";
-import sr from "./ui/sr";
 
 export { languages, type Lang };
 export const defaultLanguage: Lang = site.defaultLanguage;
 
 /** Add a file to ui/ and a line here for each new language. A language not in
  * src/site.config.ts may stay here; it is never used. */
-const ui: Record<Lang, UiStrings> & Record<string, UiStrings> = { en, sl, hr, it, sr, de };
+const ui: Record<Lang, UiStrings> & Record<string, UiStrings> = { en, sl, hr, it, de };
 
 /** True when the URLs carry a language prefix. */
 export const prefixed = languages.length > 1;

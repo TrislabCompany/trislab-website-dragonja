@@ -6,13 +6,13 @@ import { defineCollection, z } from "astro:content";
 // "<language>/<name>" (src/lib/content.ts splits it). The language of the
 // source text and the others, as drafts from it, are the site's choice.
 
-// One page per item: /<lang>/services/<name>. A list of items is a collection
-// here and an entry in `collections` in src/site.config.ts, under the same id.
-// To add another list (news, products, cases…), copy this block, give it its
-// id, add it to `collections` below and to src/site.config.ts. Add fields to
-// the schema as the items need them: a date, an image, a category.
-const services = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/services" }),
+// One page per item: /<lang>/<collection>/<name>. A list of items is a
+// collection here and an entry in `collections` in src/site.config.ts, under
+// the same id. To add another list (news, products, cases...), copy a block,
+// give it its id, add it to `collections` below and to src/site.config.ts. Add
+// fields to the schema as the items need them: a date, an image, a category.
+const attractions = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/attractions" }),
   schema: z.object({
     title: z.string(),
     summary: z.string(),
@@ -21,6 +21,7 @@ const services = defineCollection({
     tags: z.array(z.string()).default([]),
   }),
 });
+
 
 // The texts of the privacy policy, the accessibility statement and the
 // sustainability page: src/content/legal/<language>/privacy.md,
@@ -35,4 +36,4 @@ const legal = defineCollection({
   }),
 });
 
-export const collections = { services, legal };
+export const collections = { attractions, legal };

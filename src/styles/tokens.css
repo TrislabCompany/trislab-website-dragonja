@@ -1,6 +1,6 @@
 /* The brand of the site: its colours and its font. The only stylesheet a site
    changes to look like its brand; global.css uses these names and nothing
-   else for colour and type. The values are a neutral sample.
+   else for colour and type. The values were set by `pnpm init-site` from the site's brand; change them as the brand needs.
 
    Keep the contrast: --muted and --accent-text need 4.5:1 on --background and
    on --surface for WCAG 2 AA small text, and --accent-contrast needs 4.5:1 on
@@ -48,16 +48,13 @@
 
 :root {
   --background: #ffffff;
-  --surface: #f5f6f8;
+  --surface: #f8f9fa;
   --surface-strong: #e9ebf0;
   --border: #d4d8e0;
-  --text: #1d2330;
-  /* 5.9:1 on --background and 5.4:1 on --surface. */
+  --text: #2c3e50;
   --muted: #566073;
-  --accent: #2457c5;
-  /* The accent as text on --background: 6.6:1. */
-  --accent-text: #2457c5;
-  /* Text on a button or other block in --accent: 6.6:1. */
+  --accent: #21618c;
+  --accent-text: #2c3e50;
   --accent-contrast: #ffffff;
   --radius: 0.75rem;
   --font-family: "Inter Variable", "Inter Fallback", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;

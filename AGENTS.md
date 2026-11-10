@@ -1,6 +1,6 @@
-# This repository
+# trislab-website-dragonja
 
-> A content site: an Astro site built into static files and served by Cloudflare Pages. Start with [README.md](README.md); the detail is in [docs/](docs/).
+> Dragonja, dragonja.si: an Astro site built into static files and served by Cloudflare Pages. Start with [README.md](README.md); the detail is in [docs/](docs/).
 
 This file is the guide for every AI coding tool (Claude Code, Cursor, Codex, …). `CLAUDE.md` only imports it: edit conventions here.
 
