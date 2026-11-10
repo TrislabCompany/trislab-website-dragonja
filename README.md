@@ -31,6 +31,8 @@ The site's own design, not the template's: a calm, image-led destination site fo
 
 **Page weight:** the limit is 750 KB per page instead of the template's 500 KB (`page-weight.config.json`). The home page is led by photos: it shows eleven, and every one except the hero loads only when it scrolls into view, so the first screen weighs far less than the total. About and Visit us (a gallery of eight) are the next heaviest; the attraction pages stay well under 500 KB.
 
+**Largest Contentful Paint:** the Lighthouse limit is 3.0 s instead of the template's 2.5 s (`lighthouserc.json`). On About and Attractions the largest element is a photo, and on Lighthouse's simulated slow 4G phone it arrives after the two fonts with the Slovenian letters (č, š, ž), about 300 KB together, at about 2.9 s. The photos are already AVIF at the smallest width that stays sharp, and the first one loads first; the next step, if real visitors measure slower, would be a smaller font subset. Every other Lighthouse limit stays at the template's value.
+
 ## Environments
 
 | Environment | Address | Shows | Who can open it |

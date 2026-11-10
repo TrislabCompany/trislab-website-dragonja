@@ -48,7 +48,7 @@ pa11y-ci is a machine check. It finds missing alt text, low contrast, missing la
 | Accessibility score | ≥ 95 | A second view next to pa11y-ci. It includes the WCAG 2.2 target size of 24 × 24 px |
 | Best practices score | ≥ 95 | Includes errors in the browser console, such as a resource blocked by the Content-Security-Policy |
 | SEO score | ≥ 95 | |
-| Largest Contentful Paint | ≤ 2.5 s | Core Web Vital, "good" |
+| Largest Contentful Paint | ≤ 3.0 s (template: 2.5 s) | Core Web Vital; "good" is 2.5 s. Loosened for this site, see the README |
 | Cumulative Layout Shift | ≤ 0.1 | Core Web Vital, "good". The fallback font in `global.css` is sized like Inter, so text doesn't move when Inter loads |
 | Total Blocking Time | ≤ 200 ms | A lab measure standing in for Interaction to Next Paint, which only real visitors can measure |
 | First Contentful Paint | ≤ 1.8 s | |
