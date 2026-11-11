@@ -1,5 +1,6 @@
 import { glob } from "astro/loaders";
 import { defineCollection, z } from "astro:content";
+import { seoFields } from "./components/seo/fields";
 
 // Content is kept per language: src/content/<collection>/<language>/<name>.md.
 // The same file name in two languages is the same item translated; its id is
@@ -11,29 +12,32 @@ import { defineCollection, z } from "astro:content";
 // the same id. To add another list (news, products, cases...), copy a block,
 // give it its id, add it to `collections` below and to src/site.config.ts. Add
 // fields to the schema as the items need them: a date, an image, a category.
+// The search fields (a search title, a share image, noindex) are in seoFields.
 const attractions = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/attractions" }),
-  schema: z.object({
-    title: z.string(),
-    summary: z.string(),
-    /** Position in lists, lowest first. */
-    order: z.number().int(),
-    tags: z.array(z.string()).default([]),
-    /** What it is: the groups on the list page and the "ways in" on the home page. */
-    kind: z.enum(["nature", "culture", "activity", "place"]),
-    /**
-     * A photo id from src/lib/photos.ts; the build fails on an unknown id.
-     * Without one, the attraction shows the map around its point
-     * (src/lib/places.ts) instead: never a photo of another place.
-     */
-    photo: z.string().optional(),
-    /** Where it is, in a few words ("2 km upstream of the village"). */
-    where: z.string(),
-    /** Shown on the home page, in this order. */
-    featured: z.boolean().default(false),
-    /** The sources of the facts in the text: every fact cites one. */
-    sources: z.array(z.object({ title: z.string(), url: z.string().url() })).min(1),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      summary: z.string(),
+      /** Position in lists, lowest first. */
+      order: z.number().int(),
+      tags: z.array(z.string()).default([]),
+      /** What it is: the groups on the list page and the "ways in" on the home page. */
+      kind: z.enum(["nature", "culture", "activity", "place"]),
+      /**
+       * A photo id from src/lib/photos.ts; the build fails on an unknown id.
+       * Without one, the attraction shows the map around its point
+       * (src/lib/places.ts) instead: never a photo of another place.
+       */
+      photo: z.string().optional(),
+      /** Where it is, in a few words ("2 km upstream of the village"). */
+      where: z.string(),
+      /** Shown on the home page, in this order. */
+      featured: z.boolean().default(false),
+      /** The sources of the facts in the text: every fact cites one. */
+      sources: z.array(z.object({ title: z.string(), url: z.string().url() })).min(1),
+      ...seoFields(image),
+    }),
 });
 
 

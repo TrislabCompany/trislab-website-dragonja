@@ -3,6 +3,7 @@ import { render, type CollectionEntry } from "astro:content";
 import MiniMap from "../../../components/MiniMap.astro";
 import Photo from "../../../components/Photo.astro";
 import PhotoCredits from "../../../components/PhotoCredits.astro";
+import { seoProps } from "../../../components/seo/fields";
 import { localizedPath, t, type Lang } from "../../../i18n";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { entrySlug } from "../../../lib/content";
@@ -29,7 +30,7 @@ const place = {
 };
 ---
 
-<BaseLayout title={title} description={summary} lang={lang} available={available} share={photo} place={place}>
+<BaseLayout {...seoProps(entry.data)} description={summary} lang={lang} available={available} share={photo} place={place}>
   <article class="item">
     <div class="item-photo">
       {
