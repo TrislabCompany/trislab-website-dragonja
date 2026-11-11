@@ -89,6 +89,7 @@ Slovenian (default), English, Croatian, Italian and German. Each language has it
 - **Main address:** dragonja.si. www.dragonja.si redirects to it permanently at the Cloudflare edge.
 - **Environments** on Cloudflare Pages: `dev` at dev.dragonja.si (every merge to `main`), `staging` at staging.dragonja.si (release tags), both behind Cloudflare Access; `production` at dragonja.si, promoted from `staging` after the release approver's sign-off. The steps are in the template's `docs/deployment.md`.
 - **Edge:** dragonja.si is a zone in Trislab's Cloudflare account (tl-cloud-infrastructure `global/edge/records/dragonja.si/`). At the cutover the apex record to the old host goes; the mail records (MX, mail, webmail, autodiscover, SPF, DKIM, DMARC) and the Google site verification stay.
+- **Search Console** (`search-console`): the domain property `sc-domain:dragonja.si`, owned by Trislab's role account, verified by the record `google` in tl-cloud-infrastructure `global/edge/records/dragonja.si/dragonja.si.yaml` and linked in its `catalog/domains.yaml`. Keep the record through the cutover. The sitemap is `https://dragonja.si/sitemap-index.xml`: Trislab submits it after the cutover and checks the site in Search Console 4–6 weeks later.
 
 ## Integrations and outside services
 
@@ -112,6 +113,7 @@ The template's whole baseline, no exceptions: `responsive-layout` (mobile first,
 - The site sets no cookies and loads nothing from another origin, the map included.
 - `/about`, `/attractions` and `/visit-us` and www.dragonja.si redirect permanently to the new pages.
 - Google's Rich Results Test reads the structured data of a page and of an attraction.
+- SEO (owner: the development team, unless named): the Lighthouse SEO score passes in `ci`; every page and attraction has one share image with alt text in all five languages; dev and staging stay behind sign-in and out of search. After the cutover (owner: Trislab): the sitemap is submitted in Search Console, and the old addresses show as redirected, not as errors.
 - Before production: no placeholder image is left, every fact has been checked against its source, the translations are reviewed, the privacy notice is in place, and the release approver accepts staging.
 - After the cutover: mail to the domain still arrives.
 
